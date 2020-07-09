@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MessagesPage } from './messages.page';
+import { MessagesPage } from './page/messages.page';
 
 const routes: Routes = [
   {

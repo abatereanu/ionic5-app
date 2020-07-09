@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FriendListPage } from './friend-list.page';
+import { FriendListPage } from './page/friend-list.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: FriendListPage
-  }
+  { path: '', component: FriendListPage, pathMatch: 'full' }
 ];
 
 @NgModule({

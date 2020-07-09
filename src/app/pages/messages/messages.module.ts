@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MessagesPageRoutingModule } from './messages-routing.module';
 
-import { MessagesPage } from './messages.page';
+import { MessagesPage } from './page/messages.page';
 
 @NgModule({
   imports: [
