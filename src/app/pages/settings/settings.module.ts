@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
-import { SettingsPage } from './settings.page';
+import { SettingsPage } from './page/settings.page';
 
 @NgModule({
   imports: [

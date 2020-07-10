@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FeedPage } from './feed.page';
+import { FeedPage } from './page/feed.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FeedPage
+    component: FeedPage,
+    pathMatch: 'full'
   }
 ];
 
