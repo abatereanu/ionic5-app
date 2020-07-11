@@ -5,11 +5,16 @@ import { TabsPage } from './page/tabs-page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/tabs/feed',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: TabsPage,
     children: [
       {
         path: 'friend-list',
-        loadChildren: () => import('../../pages/friend-list/friend-list.module').then(m => m.FriendListPageModule)
+        loadChildren: () => import('../friend-list/pages/friend-list/friend-list.module').then(m => m.FriendListPageModule)
       },
       {
         path: 'messages',
@@ -24,11 +29,6 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/feed/feed.module').then(m => m.FeedPageModule)
       },
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/feed',
-    pathMatch: 'full'
   }
 ];
 
