@@ -12,7 +12,4 @@ import { TabsPageRoutingModule } from './tabs-page-routing.module';
   declarations: [TabsPage],
 })
 export class TabsPageModule {
-  constructor() {
-    console.log('xXXXX')
-  }
 }
