@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FriendModel } from '../model/friend.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class FriendListDataService {
 
   constructor(private http: HttpClient) { }
 
-  getFriends(params) {
-    return this.http.get('./assets/jsons/friends.json')
+  getFriends() {
+    return this.http.get<FriendModel[]>('./assets/jsons/friends.json');
   }
 }

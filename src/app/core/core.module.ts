@@ -1,9 +1,18 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { InfrastructureModule } from './infrastructure/infrastructure.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from '../../environments/environment';
+import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
+import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 @NgModule({
   imports: [
-    InfrastructureModule,
+    HttpClientModule,
+    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsSelectSnapshotModule.forRoot(),
+    NgxsDispatchPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production, maxAge: 10})
   ],
   declarations: []
 })
