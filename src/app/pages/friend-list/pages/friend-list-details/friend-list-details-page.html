@@ -13,10 +13,30 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-avatar slot="start">
-      <ion-img src="https://www.supercars.net/blog/wp-content/uploads/2016/01/Alfa-Romeo-Scighera-Concept-Car.jpg"></ion-img>
-    </ion-avatar>
-    <ion-label>lol</ion-label>
-  </ion-item>
+  <ion-card *ngIf="friend">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-item lines="none">
+          <ion-avatar slot="start" class="avatar-name">
+            {{friend.name[0]}}{{friend.lastName[0]}}
+          </ion-avatar>
+          <ion-label> {{friend.name}} {{friend.lastName}}</ion-label>
+        </ion-item>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{friend.id}}
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        {{friend.lastName}}
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="call-outline"></ion-icon>
+        {{friend.phone}}
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
