@@ -19,7 +19,7 @@ export class FriendListDetailsPage implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      const friendId = +paramMap.get('id');
+      const friendId = paramMap.get('id');
       this.storeService.getFriendById(friendId)
         .subscribe(result => {
           this.friend = result;
