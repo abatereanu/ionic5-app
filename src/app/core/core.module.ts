@@ -5,10 +5,12 @@ import { environment } from '../../environments/environment';
 import { NgxsSelectSnapshotModule } from '@ngxs-labs/select-snapshot';
 import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   imports: [
     HttpClientModule,
+    IonicStorageModule.forRoot(),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsSelectSnapshotModule.forRoot(),
     NgxsDispatchPluginModule.forRoot(),
