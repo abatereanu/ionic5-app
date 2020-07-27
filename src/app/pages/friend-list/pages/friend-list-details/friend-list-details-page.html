@@ -18,24 +18,37 @@
       <ion-card-title>
         <ion-item lines="none">
           <ion-avatar slot="start" class="avatar-name">
-            {{friend.name[0]}}{{friend.lastName[0]}}
+            {{friend.name.first[0]}}{{friend.name.last[0]}}
           </ion-avatar>
-          <ion-label> {{friend.name}} {{friend.lastName}}</ion-label>
+          <ion-label> {{friend.name.first}} {{friend.name.last}}</ion-label>
         </ion-item>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
         <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-        {{friend.id}}
+        {{friend.id.name}}
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
-        {{friend.lastName}}
+        {{friend.name.last}}
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="call-outline"></ion-icon>
         {{friend.phone}}
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="body-outline"></ion-icon>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              {{friend.dob.date | date: 'MMM d, y'}}
+            </ion-col>
+            <ion-col>
+              age: {{friend.dob.age}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     </ion-card-content>
   </ion-card>

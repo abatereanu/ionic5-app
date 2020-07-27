@@ -1,10 +1,9 @@
-import { Action, createSelector, Selector, SelectorOptions, State, StateContext } from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { FriendModel } from '../model/friend.model';
 import { FriendListDataService } from '../services/friend-list-data.service';
 import { GetFriendList } from './friend-list.actions';
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 export interface FriendListStateModel {
   friendList: FriendModel[];
@@ -29,13 +28,13 @@ export class FriendListState {
   // DynamicSelector
   static getFriendById(id: keyof FriendListStateModel): (state: FriendListStateModel) => FriendModel {
     return createSelector([FriendListState], (state) => {
-      return state.friendList.find(f => f.id === +id);
+      return state.friendList.find(f => f.login.uuid === id);
     });
   }
 
   @Action(GetFriendList)
   getFriendList(ctx: StateContext<FriendListStateModel>) {
     return this.dataService.getFriends()
-      .pipe(tap(response => ctx.patchState({ friendList: response })))
+      .pipe(tap(response => ctx.patchState({ friendList: response.results })))
   }
 }

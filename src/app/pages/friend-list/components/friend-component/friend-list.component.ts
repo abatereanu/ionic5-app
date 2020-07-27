@@ -30,11 +30,14 @@ export class FriendListComponent implements OnInit {
 
   filterData(data: any) {
     const enteredData = data.target.value;
-    this.friends = this.originalFriends.filter(friend => friend.name.toLowerCase().includes(enteredData));
+    this.friends = this.originalFriends.filter(friend => {
+      return friend.name.first.toLowerCase().includes(enteredData) || friend.name.last.toLowerCase().includes(enteredData);
+    });
+    console.log(this.friends)
   }
 
   onItemClicked(friend) {
-    this.router.navigate(['details', friend.id], { relativeTo: this.route });
+    this.router.navigate(['details', friend.login.uuid], { relativeTo: this.route });
   }
 
 }
