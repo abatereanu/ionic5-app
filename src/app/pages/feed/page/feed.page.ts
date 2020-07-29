@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-feed',
@@ -9,8 +10,7 @@ import { MenuController } from '@ionic/angular';
 export class FeedPage {
   entered = true;
 
-  constructor(private menu: MenuController) {
-    this.openFirst();
+  constructor(private menu: MenuController, private authService: AuthService) {
   }
 
   public ionViewDidEnter(): void {
@@ -20,7 +20,7 @@ export class FeedPage {
     this.entered = !this.entered;
   }
 
-
-  openFirst() {
+  onLogout() {
+    this.authService.logout();
   }
 }
