@@ -1,11 +1,15 @@
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
+import { map, switchMap, take } from 'rxjs/operators';
+
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, from, Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { Storage } from '@ionic/storage';
+
+import { UserRequestModel } from '../model/user-request.model';
+import { CONSTANTS } from '../constants/constants';
 
 const TOKEN_KEY = 'jwt-token';
 const helper = new JwtHelperService();
@@ -48,7 +52,7 @@ export class AuthService {
   }
 
   login(credentials: { username: string, password: string }): Observable<any> {
-    return this.http.post('http://localhost:4000/auth/login', credentials).pipe(
+    return this.http.post(CONSTANTS.API_URL + '/auth/login', credentials).pipe(
       take(1),
       switchMap((res: any) => {
         let decoded = helper.decodeToken(res.token);
@@ -74,4 +78,12 @@ export class AuthService {
   }
 
 
+  registerUser(credentials: UserRequestModel): Observable<any> {
+    return this.http.post(CONSTANTS.API_URL + '/auth/register', credentials);
+  }
+
+
+  getUserRoles(): Observable<any> {
+    return this.http.get(CONSTANTS.API_URL + '/roles');
+  }
 }
