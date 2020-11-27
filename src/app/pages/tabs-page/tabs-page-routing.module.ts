@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: () => import('../friend-list/pages/friend-list/friend-list.module').then(m => m.FriendListPageModule)
       },
       {
-        path: 'messages',
-        loadChildren: () => import('../../pages/messages/messages.module').then(m => m.MessagesPageModule)
+        path: 'user-list',
+        loadChildren: () => import('../user-list/user-list.module').then(m => m.UserListModule)
       },
       {
         path: 'settings',

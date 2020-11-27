@@ -82,8 +82,4 @@ export class AuthService {
     return this.http.post(CONSTANTS.API_URL + '/auth/register', credentials);
   }
 
-
-  getUserRoles(): Observable<any> {
-    return this.http.get(CONSTANTS.API_URL + '/roles');
-  }
 }
