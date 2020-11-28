@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Chart} from 'chart.js';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import {Chart} from 'chart.js';
 export class SettingsPage implements OnInit {
 
   chart;
-  constructor() { }
+  constructor(private readonly router: Router) { }
 
   ngOnInit() {
 
@@ -52,6 +53,11 @@ export class SettingsPage implements OnInit {
         }
       }
     });
+  }
+
+
+  goToUserConfiguration() {
+    this.router.navigate(['user-management']);
   }
 
  }

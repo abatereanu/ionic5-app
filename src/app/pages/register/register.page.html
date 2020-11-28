@@ -32,15 +32,6 @@
               <mat-error *ngIf="registerForm.hasError('required', ['confirmPassword'])">Confirm password</mat-error>
               <mat-error *ngIf="registerForm.hasError('passwordNotMatch', ['confirmPassword'])">Password does not match</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" style="width: 100%">
-              <mat-label>Select Role</mat-label>
-              <mat-select formControlName="rolesControl" name="role" multiple panelClass="select-color">
-                <mat-option *ngFor="let role of roles" [value]="role" class="role-option">
-                  {{role.toLowerCase()}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="registerForm.get('rolesControl').hasError('required')">Please choose one or more roles</mat-error>
-            </mat-form-field>
             <ion-button [disabled]="registerForm.untouched || registerForm.invalid" type="submit" expand="block">Register</ion-button>
           </form>
         </ion-card-content>
