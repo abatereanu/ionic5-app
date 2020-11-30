@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add Auction</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addAuctionForm" (ngSubmit)="onFormSubmitted(addAuctionForm.getRawValue())" #formDirective="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Make</ion-label>
+        <ion-select formControlName="make" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
+          <ion-select-option value="BMW">BMW</ion-select-option>
+          <ion-select-option value="Audi">Audi</ion-select-option>
+          <ion-select-option value="Mercedes">Mercedes</ion-select-option>
+          <ion-select-option value="VW">Volkswagen</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('make').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('year').getError('required')">This field is required</div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Model</ion-label>
+        <ion-select formControlName="model" value="BMW">
+          <ion-select-option value="BMW">BMW</ion-select-option>
+          <ion-select-option value="Audi">Audi</ion-select-option>
+          <ion-select-option value="Mercedes">Mercedes</ion-select-option>
+          <ion-select-option value="VW">Volkswagen</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('model').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('model').getError('required')">This field is required</div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Year</ion-label>
+        <ion-datetime formControlName="year" displayFormat="MMM YYYY" min="1960" max="2020"></ion-datetime>
+      </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('year').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('year').getError('required')">This field is required</div>
+      </div>
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>Mileage</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-segment formControlName="mileageType">
+                <ion-segment-button value="kmh">km/h</ion-segment-button>
+                <ion-segment-button value="mph">mph</ion-segment-button>
+              </ion-segment>
+            </ion-col>
+            <ion-col>
+              <ion-input formControlName="mileage" class="ion-text-right"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!--<ion-label position="floating">Mileage</ion-label>
+        <ion-toolbar>
+          <ion-segment value="kmh" (ionChange)="onSegmentChange($event)">
+            <ion-segment-button value="kmh">km/h</ion-segment-button>
+            <ion-segment-button value="mph">mph</ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+        <ion-input formControlName="mileage" class="ion-text-right"></ion-input>-->
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Vehicle State</ion-label>
+        <ion-select formControlName="state" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
+          <ion-select-option value="new">New</ion-select-option>
+          <ion-select-option  value="used">Used</ion-select-option >
+          <ion-select-option value="repair">Needs Repair</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('state').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('state').getError('required')">This field is required</div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea formControlName="description" cols=""></ion-textarea>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" type="submit">Add</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+
+  </form>
+</ion-content>
