@@ -1,4 +1,15 @@
+@keyframes errorFieldAnimation {
+  from {height: 0;}
+  to   {height: 20px;}
+}
+
 .error-field {
   border-top: solid 1px red;
   margin-left: 20px;
+  color: red;
+  display: block;
+  animation-name: errorFieldAnimation;
+  animation-duration: 250ms;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
 }

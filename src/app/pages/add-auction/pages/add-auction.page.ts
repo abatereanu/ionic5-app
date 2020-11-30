@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuController, ToastController } from '@ionic/angular';
-import { AuthService } from '../../../shared/services/auth.service';
+import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { filter } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AddAuctionStoreService } from '../store/add-auction-store.service';
-import { AddAuctionDataService } from '../services/add-auction-data.service';
-import { Actions, ofAction, ofActionCompleted, ofActionSuccessful } from '@ngxs/store';
+import { Actions, ofActionCompleted } from '@ngxs/store';
 import { AddAuction } from '../store/add-auction.actions';
+import dayjs from 'dayjs';
 
 @UntilDestroy()
 @Component({
@@ -44,9 +42,11 @@ export class AddAuctionPage implements OnInit {
     });
   }
 
-  onFormSubmitted(value) {
+  onFormSubmitted(formData) {
     if (!this.addAuctionForm.invalid) {
-      this.storeService.addAuction(value);
+      formData.mileage = +formData.mileage;
+      formData.year = dayjs(formData.year).format('YYYY-MM-DD');
+      this.storeService.addAuction(formData);
       this.actions$
         .pipe(ofActionCompleted(AddAuction))
         .subscribe(async (action) => {
@@ -58,7 +58,6 @@ export class AddAuctionPage implements OnInit {
             });
 
             await toast.present();
-            return;
           } else {
             const toast = await this.toastController.create({
               message: 'Auction has been successfully added!',
@@ -93,7 +92,4 @@ export class AddAuctionPage implements OnInit {
     console.log(e.detail.value)
   }
 
-  onLogout() {
-    //this.authService.logout();
-  }
 }

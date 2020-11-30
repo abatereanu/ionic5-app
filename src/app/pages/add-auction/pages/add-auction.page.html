@@ -4,11 +4,6 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Add Auction</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="log-out" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -25,7 +20,7 @@
         </ion-select>
       </ion-item>
       <div class="error-field" *ngIf="addAuctionForm.get('make').errors && formDirective.submitted">
-        <div *ngIf="addAuctionForm.get('year').getError('required')">This field is required</div>
+        <div *ngIf="addAuctionForm.get('make').getError('required')">This field is required</div>
       </div>
 
       <ion-item>
@@ -75,23 +70,30 @@
         </ion-toolbar>
         <ion-input formControlName="mileage" class="ion-text-right"></ion-input>-->
       </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('mileage').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('mileage').getError('required')">This field is required</div>
+      </div>
 
       <ion-item>
         <ion-label position="floating">Vehicle State</ion-label>
-        <ion-select formControlName="state" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
+        <ion-select formControlName="vehicleState" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
           <ion-select-option value="new">New</ion-select-option>
           <ion-select-option  value="used">Used</ion-select-option >
           <ion-select-option value="repair">Needs Repair</ion-select-option>
+          <ion-select-option value="parts">Parts Only</ion-select-option>
         </ion-select>
       </ion-item>
-      <div class="error-field" *ngIf="addAuctionForm.get('state').errors && formDirective.submitted">
-        <div *ngIf="addAuctionForm.get('state').getError('required')">This field is required</div>
+      <div class="error-field" *ngIf="addAuctionForm.get('vehicleState').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('vehicleState').getError('required')">This field is required</div>
       </div>
 
       <ion-item>
         <ion-label position="floating">Description</ion-label>
         <ion-textarea formControlName="description" cols=""></ion-textarea>
       </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('description').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('description').getError('required')">This field is required</div>
+      </div>
 
       <ion-grid>
         <ion-row>

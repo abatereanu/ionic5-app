@@ -56,14 +56,4 @@ export class LoginPage implements OnInit {
       });
   }
 
- /* private errorHandler(message) {
-    let errorMessage = '';
-    if (message?.errors) {
-      message.errors.forEach(err => {
-        errorMessage = errorMessage.concat(err.errorMessage);
-      });
-      return errorMessage
-    }
-  }
-*/
 }
