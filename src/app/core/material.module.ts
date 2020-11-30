@@ -6,10 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -20,6 +21,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatStepperModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
     MatIconModule,
     MatOptionModule,

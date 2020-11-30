@@ -13,6 +13,14 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'feed',
+        loadChildren: () => import('../../pages/feed/feed.module').then(m => m.FeedPageModule)
+      },
+      {
+        path: 'add-auction',
+        loadChildren: () => import('../../pages/add-auction/add-auction.module').then(m => m.AddAuctionModule)
+      },
+      {
         path: 'friend-list',
         loadChildren: () => import('../friend-list/pages/friend-list/friend-list.module').then(m => m.FriendListPageModule)
       },
