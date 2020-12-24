@@ -37,8 +37,9 @@ export class AddAuctionPage implements OnInit {
       year: ['', Validators.required],
       mileage: ['', Validators.required],
       mileageType: ['kmh'],
-      state: ['', Validators.required],
+      vehicleState: ['', Validators.required],
       description: ['', Validators.required],
+      images: [''],
     });
   }
 
