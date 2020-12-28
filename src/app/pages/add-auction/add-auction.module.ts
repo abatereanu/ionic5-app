@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FriendListPage } from '../friend-list/pages/friend-list/friend-list.page';
-import { FriendListComponent } from '../friend-list/components/friend-component/friend-list.component';
 import { AddAuctionRoutingModule } from './add-auction-routing.module';
 import { AddAuctionPage } from './pages/add-auction.page';
 import { CommonModule } from '@angular/common';

@@ -1,10 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ApiImage, ImageDataService } from '../../services/image-data.service';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { CONSTANTS } from '../../../../shared/constants/constants';
-import { ImageStoreService } from '../store/image-store.service';
-import { filter } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 
 const { Camera } = Plugins;
 
@@ -13,8 +12,9 @@ const { Camera } = Plugins;
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss'],
 })
-export class ImageComponent implements OnInit {
-  @Input() formGroup;
+export class ImageComponent implements OnChanges {
+  @Input() formGroup: FormGroup;
+  @Input() formSubmitted: boolean;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
   constants = CONSTANTS;
@@ -22,20 +22,18 @@ export class ImageComponent implements OnInit {
   imageIds: string[] = [];
 
   constructor(
-    private imageDataService: ImageDataService,
-    private imageStoreService: ImageStoreService,
-    private plt: Platform,
-    private actionSheetCtrl: ActionSheetController) {
+    private readonly imageDataService: ImageDataService,
+    private readonly plt: Platform,
+    private readonly actionSheetCtrl: ActionSheetController,
+    private readonly toastController: ToastController,
+    private readonly loadingController: LoadingController
+    ) {
   }
 
-  ngOnInit() {
-    this.imageStoreService.images$
-      .pipe(filter(images => !!images))
-      .subscribe((newImages: ApiImage[]) => {
-        this.images = [...newImages];
-        this.imageIds = newImages.map(image => image.id);
-        this.formGroup.get('images').setValue(this.imageIds);
-      });
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.formSubmitted?.currentValue) {
+      this.images = [];
+    }
   }
 
   async selectImageSource() {
@@ -94,18 +92,43 @@ export class ImageComponent implements OnInit {
   }
 
   // Used for browser direct file upload
-  uploadFile(event: EventTarget) {
+  async uploadFile(event: EventTarget) {
+    const loader = await this.loadingController.create({
+      message: 'Uploading images...',
+    });
+    loader.present();
+
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const files: FileList = target.files;
 
-    this.imageStoreService.uploadImageFiles(files);
+    this.imageDataService.uploadImageFiles(files)
+      .subscribe((newImages: ApiImage[]) => {
+        newImages.forEach(newImage => {
+          this.images.push(newImage);
+          this.imageIds = newImages.map(image => image.id);
+          this.formGroup.get('imageIds').setValue(this.imageIds);
+          loader.dismiss();
+        });
+      }, error => {
+        console.log(error)
+      });
   }
 
 
   deletePhoto(i: number, image: ApiImage) {
-    this.imageStoreService.deleteImage(image.id);
-    this.images.splice(i, 1);
+    this.imageDataService.deleteImage(image.id)
+      .subscribe(async () => {
+        this.images.splice(i, 1);
+      }, async (error) => {
+        const toast = await this.toastController.create({
+          message: 'Selected image doesn\'t exist',
+          duration: 4000,
+          color: 'danger'
+        });
+        this.images.splice(i, 1);
+        toast.present();
+      });
   }
 
   // Helper function
@@ -126,8 +149,7 @@ export class ImageComponent implements OnInit {
       byteArrays.push(byteArray);
     }
 
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
+    return new Blob(byteArrays, { type: contentType });
   }
 
 }
