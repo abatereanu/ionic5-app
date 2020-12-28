@@ -29,7 +29,7 @@ export class ImageDataService {
     return this.http.post(`${CONSTANTS.API_URL}/image`, formData);
   }
 
-  uploadImageFile(files: FileList) {
+  uploadImageFiles(files: FileList) {
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       const ext = files.item(i).name.split('.').pop();

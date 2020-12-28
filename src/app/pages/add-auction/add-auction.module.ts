@@ -10,6 +10,7 @@ import { MaterialModule } from '../../core/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { AddAuctionState } from './store/add-auction.state';
 import { ImageComponent } from './components/image/image.component';
+import { ImageState } from './components/store/image.state';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ImageComponent } from './components/image/image.component';
     ReactiveFormsModule,
     MaterialModule,
     AddAuctionRoutingModule,
-    NgxsModule.forFeature([AddAuctionState]),
+    NgxsModule.forFeature([AddAuctionState, ImageState]),
   ],
   declarations: [
     AddAuctionPage,

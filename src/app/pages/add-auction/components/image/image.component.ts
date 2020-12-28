@@ -3,6 +3,8 @@ import { ApiImage, ImageDataService } from '../../services/image-data.service';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { CONSTANTS } from '../../../../shared/constants/constants';
+import { ImageStoreService } from '../store/image-store.service';
+import { filter } from 'rxjs/operators';
 
 const { Camera } = Plugins;
 
@@ -18,15 +20,22 @@ export class ImageComponent implements OnInit {
   constants = CONSTANTS;
   images: ApiImage[] = [];
   imageIds: string[] = [];
-  changeText = false;
 
   constructor(
     private imageDataService: ImageDataService,
+    private imageStoreService: ImageStoreService,
     private plt: Platform,
     private actionSheetCtrl: ActionSheetController) {
   }
 
   ngOnInit() {
+    this.imageStoreService.images$
+      .pipe(filter(images => !!images))
+      .subscribe((newImages: ApiImage[]) => {
+        this.images = [...newImages];
+        this.imageIds = newImages.map(image => image.id);
+        this.formGroup.get('images').setValue(this.imageIds);
+      });
   }
 
   async selectImageSource() {
@@ -89,26 +98,14 @@ export class ImageComponent implements OnInit {
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const files: FileList = target.files;
-    this.imageDataService.uploadImageFile(files).subscribe((newImages: ApiImage[]) => {
-      newImages.forEach(newImage => {
-        this.images.push(newImage);
-        this.imageIds.push(newImage.id);
-      });
-      this.formGroup.get('images').setValue(this.imageIds);
-    });
+
+    this.imageStoreService.uploadImageFiles(files);
   }
 
 
-  deletePhoto(i) {
+  deletePhoto(i: number, image: ApiImage) {
+    this.imageStoreService.deleteImage(image.id);
     this.images.splice(i, 1);
-  }
-
-  showFab(x) {
-    if (x) {
-      setTimeout(() => this.changeText = x, 1000)
-    } else {
-      this.changeText = x;
-    }
   }
 
   // Helper function
