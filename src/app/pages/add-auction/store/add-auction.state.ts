@@ -11,7 +11,7 @@ export class AddAuctionState {
   }
 
   @Action(AddAuction)
-  getFriendList(ctx: StateContext<any>, action: AddAuction) {
+  createAuction(ctx: StateContext<any>, action: AddAuction) {
     return this.dataService.addAuction(action.auctionData)
   }
 }
