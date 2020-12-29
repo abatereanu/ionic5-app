@@ -26,7 +26,6 @@ export class HttpInterceptorService implements HttpInterceptor  {
       .pipe(
         switchMap(token => {
           request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${token}` ) });
-          request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
           request = request.clone({ url: request.url });
           return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
@@ -59,7 +58,7 @@ export class HttpInterceptorService implements HttpInterceptor  {
     const alert = await this.alertController.create({
       header: 'Bad Request',
       subHeader: `Validation failed for following fields:`,
-      message: this.getFieldsError(reason.errors),
+      message: this.getFieldsError(reason.errors || reason),
       buttons: ['OK']
     });
 
@@ -82,7 +81,10 @@ export class HttpInterceptorService implements HttpInterceptor  {
     await alert.present();
   }
 
-  private getFieldsError(errors: any[]) {
+  private getFieldsError(errors: any[] | string) {
+    if (typeof errors === 'string') {
+      return errors;
+    }
     let errorMessages = '';
     errors.forEach(e => {
        errorMessages += `<p> ${e.errorMessage} </p>`

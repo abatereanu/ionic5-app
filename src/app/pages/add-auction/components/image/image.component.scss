@@ -1,0 +1,41 @@
+@keyframes showFab {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+#photos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .upload-photo {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    margin: 10px;
+
+    &:hover > ion-fab {
+      animation-name: showFab;
+      animation-duration: 1s;
+      display: block;
+      visibility: visible;
+    }
+
+    ion-img {
+      align-self: center;
+    }
+
+    ion-fab {
+      display: none;
+      visibility: hidden;
+      right: 5px;
+      bottom: 5px;
+
+      ion-fab-button {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { MaterialModule } from '../../core/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { AddAuctionState } from './store/add-auction.state';
+import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { AddAuctionState } from './store/add-auction.state';
   ],
   declarations: [
     AddAuctionPage,
+    ImageComponent,
   ]
 })
 export class AddAuctionModule {}
