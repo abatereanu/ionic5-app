@@ -9,10 +9,10 @@
       accept="image/*"
     />
     <div *ngFor="let image of images; let i = index">
-      <ion-card class="upload-photo" (mouseenter)="showFab(true)" (mouseleave)="showFab(false)">
+      <ion-card class="upload-photo">
         <ion-img [src]="constants.API_URL + '/image/' + image.id"></ion-img>
-        <ion-fab horizontal="end" vertical="end"  *ngIf="changeText">
-          <ion-fab-button color="danger" (click)="deletePhoto(i)">
+        <ion-fab horizontal="end" vertical="end">
+          <ion-fab-button color="danger" (click)="deletePhoto(i, image)">
             <ion-icon name="trash" size="small"></ion-icon>
           </ion-fab-button>
         </ion-fab>
