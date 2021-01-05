@@ -61,14 +61,6 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        <!--<ion-label position="floating">Mileage</ion-label>
-        <ion-toolbar>
-          <ion-segment value="kmh" (ionChange)="onSegmentChange($event)">
-            <ion-segment-button value="kmh">km/h</ion-segment-button>
-            <ion-segment-button value="mph">mph</ion-segment-button>
-          </ion-segment>
-        </ion-toolbar>
-        <ion-input formControlName="mileage" class="ion-text-right"></ion-input>-->
       </ion-item>
       <div class="error-field" *ngIf="addAuctionForm.get('mileage').errors && formDirective.submitted">
         <div *ngIf="addAuctionForm.get('mileage').getError('required')">This field is required</div>
@@ -95,7 +87,7 @@
         <div *ngIf="addAuctionForm.get('description').getError('required')">This field is required</div>
       </div>
 
-      <app-image [formGroup]="addAuctionForm"></app-image>
+      <app-image [formGroup]="addAuctionForm" [formSubmitted]="isFormSubmitted"></app-image>
 
       <ion-grid>
         <ion-row>

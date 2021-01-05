@@ -1,26 +1,28 @@
-<form [formGroup]="formGroup">
-  <div id="photos">
-    <input
-      type="file"
-      #fileInput
-      multiple
-      hidden
-      (change)="uploadFile($event)"
-      accept="image/*"
-    />
-    <div *ngFor="let image of images; let i = index">
-      <ion-card class="upload-photo">
-        <ion-img [src]="constants.API_URL + '/image/' + image.id"></ion-img>
-        <ion-fab horizontal="end" vertical="end">
-          <ion-fab-button color="danger" (click)="deletePhoto(i, image)">
-            <ion-icon name="trash" size="small"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </ion-card>
-    </div>
-    <ion-card class="upload-photo" (click)="selectImageSource()">
-      <ion-img style="width: 30px; height: 30px" [src]="'../../../../assets/images/add-new-photo.png'"></ion-img>
+<div id="photos" [formGroup]="formGroup">
+  <input
+    type="file"
+    #fileInput
+    multiple
+    hidden
+    (change)="uploadFile($event)"
+    (click)="fileInput.value = null"
+    accept="image/*"
+  />
+
+  <div *ngFor="let image of images; let i = index">
+    <ion-card class="photo-card">
+      <ion-img [src]="constants.API_URL + '/image/' + image.id"></ion-img>
+      <ion-fab horizontal="end" vertical="end">
+        <ion-fab-button color="danger" (click)="deletePhoto(i, image)">
+          <ion-icon name="trash" size="small"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-card>
   </div>
-</form>
+
+  <ion-card class="photo-card upload-button" (click)="selectImageSource()">
+    <ion-img style="width: 30px; height: 30px" [src]="'../../../../assets/images/add-new-photo.png'"></ion-img>
+  </ion-card>
+</div>
+
 

@@ -8,7 +8,13 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  .upload-photo {
+  .upload-button {
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+
+  .photo-card {
     display: flex;
     width: 100px;
     height: 100px;
