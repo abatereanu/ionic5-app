@@ -1,9 +1,5 @@
-export interface ApiResponseModel<T> {
-  info: {
-    page: number;
-    results: number;
-    seed?: string;
-    version?: string;
-  };
-  results: T;
+export interface ApiResponse<T> {
+  data: T;
+  totalPages: number;
+  totalItems: number;
 }

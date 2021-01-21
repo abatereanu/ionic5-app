@@ -1,4 +1,6 @@
-export interface AuctionResponseModel {
+import { ImageModel } from './image.model';
+
+export interface AuctionModel {
   id: string;
   createdDate: string;
   make: string;
@@ -9,5 +11,5 @@ export interface AuctionResponseModel {
   vehicleState: 'new' | 'used' | 'repair';
   year: string;
   username: string;
-  images: [];
+  images: ImageModel[];
 }

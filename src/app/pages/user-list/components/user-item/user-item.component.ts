@@ -1,9 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {from} from 'rxjs';
-import {UserListDataService} from '../../services/user-list-data.service';
-import {Storage} from '@ionic/storage';
-import {UserModel} from '../../model/user.model';
-import {UserListStoreService} from '../../store/user-list-store.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { UserModel } from '../../model/user.model';
+import { UserListStoreService } from '../../store/user-list-store.service';
 
 
 const USER_KEY = 'user_storage';
@@ -14,8 +12,7 @@ const USER_KEY = 'user_storage';
 })
 export class UserItemComponent implements OnInit {
 
-  @Input() users: Array<UserModel>;
-
+  @Input() users: UserModel[];
 
   constructor(private readonly storage: Storage,
               public readonly userListStoreService: UserListStoreService
@@ -27,12 +24,10 @@ export class UserItemComponent implements OnInit {
 
   private getUsers() {
     this.userListStoreService.getUserList();
-
   }
 
   filterData(data: any) {
     const enteredData = data.target.value;
-
   }
 
 }

@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/tabs/auction-feed"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Details</ion-title>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon name="trash" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
+            <ion-img *ngIf="i === 0" [src]="'http://192.168.0.14:4000/image/' + image?.id"></ion-img>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

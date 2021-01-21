@@ -5,7 +5,7 @@ import { TabsPage } from './page/tabs-page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/tabs/feed',
+    redirectTo: '/tabs/auction-list',
     pathMatch: 'full'
   },
   {
@@ -13,8 +13,8 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'feed',
-        loadChildren: () => import('../../pages/feed/feed.module').then(m => m.FeedPageModule)
+        path: 'auction-list',
+        loadChildren: () => import('../auction-list/auction-list.module').then(m => m.AuctionListModule)
       },
       {
         path: 'add-auction',
@@ -31,10 +31,6 @@ const routes: Routes = [
       {
         path: 'settings',
         loadChildren: () => import('../../pages/settings/settings.module').then(m => m.SettingsPageModule)
-      },
-      {
-        path: 'feed',
-        loadChildren: () => import('../../pages/feed/feed.module').then(m => m.FeedPageModule)
       },
     ]
   }
