@@ -20,8 +20,4 @@ export class UserListDataService {
        return this.http.get<UserModel>(CONSTANTS.API_URL + '/users');
     }
 
-    setUserRole() {
-       //return this.http.
-    }
-
 }

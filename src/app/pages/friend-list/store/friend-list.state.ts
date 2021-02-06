@@ -35,6 +35,6 @@ export class FriendListState {
   @Action(GetFriendList)
   getFriendList(ctx: StateContext<FriendListStateModel>) {
     return this.dataService.getFriends()
-      .pipe(tap(response => ctx.patchState({ friendList: response.results })))
+      .pipe(tap(response => ctx.patchState({ friendList: response.data })))
   }
 }

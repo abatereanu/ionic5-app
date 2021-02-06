@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendListDataService } from '../../services/friend-list-data.service';
 import { ActivatedRoute } from '@angular/router';
 import { FriendModel } from '../../model/friend.model';
 import { FriendListStoreService } from '../../store/friend-list-store.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-friend-list-details',
@@ -24,12 +22,8 @@ export class FriendListDetailsPage implements OnInit {
         .subscribe(result => {
           this.friend = result;
           console.log(this.friend);
-        })
-    })
-  }
-
-  onDeleteFriend() {
-    //this.dataService
+        });
+    });
   }
 
 }
