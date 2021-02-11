@@ -2,6 +2,7 @@ import { ImageModel } from './image.model';
 
 export interface AuctionModel {
   id: string;
+  title: string;
   createdDate: string;
   make: string;
   model: string;
