@@ -1,9 +1,11 @@
 import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
+import { append, patch} from '@ngxs/store/operators';
 import { Injectable } from '@angular/core';
+
 import { AuctionListDataService } from '../services/auction-list-data.service';
-import { tap } from 'rxjs/operators';
 import { AuctionModel } from '../../add-auction/models/auction.model';
 import { GetAuctionList } from './auction-list.actions';
+import { tap } from 'rxjs/operators';
 
 export interface AuctionListStateModel {
   auctionList: AuctionModel[];
@@ -42,7 +44,7 @@ export class AuctionListState {
   getAuctionFeed(ctx: StateContext<AuctionListStateModel>, action: GetAuctionList) {
     return this.dataService.getAuctionData(action.page)
       .pipe(tap(response => {
-        ctx.patchState({ auctionList: response.data, totalPages: response.totalPages });
+        ctx.setState(patch({ auctionList: append(response.data), totalPages: response.totalPages}));
       }));
   }
 }

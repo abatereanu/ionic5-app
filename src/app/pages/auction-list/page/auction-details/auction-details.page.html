@@ -13,9 +13,76 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides pager="true" [options]="slideOpts">
+    <ion-slides *ngIf="auctionDetails?.images.length; else noImage" pager="true" [options]="slideOpts">
         <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
-            <ion-img *ngIf="i === 0" [src]="'http://192.168.0.14:4000/image/' + image?.id"></ion-img>
+            <ion-col>
+                <ion-img [src]="apiUrl + '/image/' + image?.id"></ion-img>
+            </ion-col>
         </ion-slide>
     </ion-slides>
+    <ng-template #noImage>
+        <ion-img class="no-img" [src]="'../../../../assets/images/no-img.jpg'"></ion-img>
+    </ng-template>
+
+    <ion-grid class="auction-details">
+        <h1 class="title">{{auctionDetails?.title}}</h1>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Make:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.make}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Model:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.model}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Mileage:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.mileage}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Mileage type:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.mileageType}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Vehicle state:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.vehicleState}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Year:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.year}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="title" size="4">
+            Description:
+          </ion-col>
+          <ion-col>
+            {{auctionDetails?.description}}
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="date">Post date: {{auctionDetails?.createdDate}}</div>
+    <div class="date">Author: {{auctionDetails?.username}}</div>
 </ion-content>

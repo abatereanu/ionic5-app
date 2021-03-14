@@ -106,7 +106,7 @@ export class ImageComponent implements OnChanges {
       .subscribe((newImages: ApiImage[]) => {
         newImages.forEach(newImage => {
           this.images.push(newImage);
-          this.imageIds = newImages.map(image => image.id);
+          this.imageIds = this.images.map(image => image.id);
           this.formGroup.get('imageIds').setValue(this.imageIds);
           loader.dismiss();
         });

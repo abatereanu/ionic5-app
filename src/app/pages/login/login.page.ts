@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,7 +28,7 @@ export class LoginPage implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-    })
+    });
   }
 
   onFormSubmitted(enteredValues) {

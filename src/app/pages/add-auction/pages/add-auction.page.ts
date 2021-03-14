@@ -34,6 +34,7 @@ export class AddAuctionPage implements OnInit {
 
   initForm() {
     this.addAuctionForm = this.formBuilder.group({
+      title: ['', Validators.required],
       make: [undefined, Validators.required],
       model: [{ disabled: true, value: undefined }, Validators.required],
       year: ['', Validators.required],
@@ -57,7 +58,7 @@ export class AddAuctionPage implements OnInit {
         )
         .subscribe(async (action) => {
           if (!action.result.successful) {
-            let error = action.result.error;
+            const error = action.result.error;
             const toast = await this.toastController.create({
               message: (error as any).error?.message || error.message,
               duration: 4000,
@@ -97,7 +98,7 @@ export class AddAuctionPage implements OnInit {
   }
 
   onMakeSelected(e) {
-    console.log(e.detail.value)
+    console.log(e.detail.value);
   }
 
 }

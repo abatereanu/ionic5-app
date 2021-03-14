@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuctionModel } from '../../../add-auction/models/auction.model';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
+import { CONSTANTS } from '../../../../shared/constants/constants';
 
 
 @Component({
@@ -11,11 +12,14 @@ import { AuctionListStoreService } from '../../store/auction-list-store.service'
 })
 export class AuctionDetailsPage implements OnInit {
 
+    apiUrl = CONSTANTS.API_URL;
     slideOpts: any;
     auctionDetails: AuctionModel;
 
-    constructor(private route: ActivatedRoute, private storeService: AuctionListStoreService) {
-
+    constructor(
+      private route: ActivatedRoute,
+      private storeService: AuctionListStoreService
+    ) {
     }
 
 
@@ -30,7 +34,10 @@ export class AuctionDetailsPage implements OnInit {
         });
         this.slideOpts = {
             initialSlide: 1,
-            speed: 400
+            speed: 400,
+            shadow: true,
+            slideShadows: true,
+            watchSlidesProgress: true,
         };
     }
 
