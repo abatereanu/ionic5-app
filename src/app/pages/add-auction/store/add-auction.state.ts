@@ -9,7 +9,7 @@ export interface AuctionStateModel {
   year: string;
   mileage: string;
   mileageType: 'kmh' | 'mph';
-  state: 'new' | 'used' | 'repair';
+  state: 'new' | 'used' | 'repair' | 'parts';
   description?: string;
 }
 

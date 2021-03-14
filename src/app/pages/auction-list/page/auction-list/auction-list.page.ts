@@ -1,10 +1,15 @@
+import { Actions, ofActionCompleted } from '@ngxs/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { delay, filter } from 'rxjs/operators';
 import { IonInfiniteScroll, IonRefresher, MenuController } from '@ionic/angular';
-import { AuthService } from '../../../../shared/services/auth.service';
+import { Router } from '@angular/router';
+
+import { ApplyAllFilters } from '../../../search-auctions/store/search-auctions.actions';
 import { AuctionModel } from '../../../add-auction/models/auction.model';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
-import { delay, filter, take } from 'rxjs/operators';
+import { AuthService } from '../../../../shared/services/auth.service';
 import { CONSTANTS } from '../../../../shared/constants/constants';
+
 
 @Component({
   selector: 'app-auction-feed',
@@ -18,55 +23,66 @@ export class AuctionListPage implements OnInit {
 
   apiUrl = CONSTANTS.API_URL;
   auctionList: AuctionModel[] = [];
-  private page: number = 0;
+  private page = 0;
+  eventType = '';
 
   constructor(
     private menu: MenuController,
     private authService: AuthService,
-    private storeService: AuctionListStoreService,
+    private auctionListStoreService: AuctionListStoreService,
+    private route: Router,
+    private actions$: Actions,
   ) {
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
+    console.log(this.route.getCurrentNavigation().extras.state);
+    this.actions$
+      .pipe(
+      ofActionCompleted(ApplyAllFilters)
+      )
+      .subscribe(() => {
+        this.getAuctions(this.page);
+      });
+
+    this.auctionListStoreService.auctions$
+      .pipe(
+        filter(auctionList => !!auctionList),
+        delay(1000)
+      )
+      .subscribe(auctionList => {
+        if (this.eventType === 'ionRefresh') {
+          this.auctionList = auctionList;
+          this.refresher.complete();
+        } else {
+          this.auctionList = auctionList;
+          this.infiniteScroll.complete();
+        }
+        if (this.page + 1 === this.auctionListStoreService.totalPages) {
+          this.infiniteScroll.disabled = true;
+        }
+      });
+
     this.getAuctions(this.page);
   }
 
-  public ionViewDidEnter(): void {
-    this.infiniteScroll.disabled = this.page === this.storeService.totalPages;
-  }
 
   loadData(event: any) {
     if (event.type === 'ionRefresh') {
+      this.auctionListStoreService.resetAuctionList();
+      this.eventType = 'ionRefresh';
       this.page = 0;
       this.infiniteScroll.disabled = false;
     } else {
       this.page++;
+      this.eventType = 'ionInfinite';
     }
 
-    this.getAuctions(this.page, event);
+    this.getAuctions(this.page);
   }
 
-  getAuctions(page: number, event?: any) {
-    this.storeService.getAuctionList(page);
-
-    this.storeService.auctions$
-      .pipe(
-        filter(auctionList => !!auctionList && auctionList.length !== 0),
-        take(1),
-        delay(1000)
-      )
-      .subscribe(auctionList => {
-        if (event?.type === 'ionRefresh') {
-          this.auctionList = auctionList;
-          this.refresher.complete();
-        } else {
-          this.auctionList = this.auctionList.concat(auctionList);
-          this.infiniteScroll.complete();
-        }
-        if (this.page === this.storeService.totalPages) {
-          this.infiniteScroll.disabled = true;
-        }
-      });
+  getAuctions(page: number) {
+    this.auctionListStoreService.getAuctionList(page);
   }
 
   onLogout() {

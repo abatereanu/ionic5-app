@@ -1,0 +1,9 @@
+.filter-limit-error {
+  display: none;
+
+  &.error-message {
+    padding: 10px 20px;
+    color: red;
+    display: block;
+  }
+}

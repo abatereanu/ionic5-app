@@ -11,7 +11,6 @@ import {MaterialModule} from '../../core/material.module';
 import {UserConfigurationPage} from './pages/user-configuration/user-configuration.page';
 import {UserItemComponent} from './components/user-item/user-item.component';
 import {NgxsModule} from '@ngxs/store';
-import {FriendListState} from '../friend-list/store/friend-list.state';
 import {UserListState} from './store/user-list.state';
 import {UserListDataService} from './services/user-list-data.service';
 

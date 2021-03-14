@@ -110,7 +110,18 @@ export class ImageComponent implements OnChanges {
           this.formGroup.get('imageIds').setValue(this.imageIds);
           loader.dismiss();
         });
-      }, error => {
+      }, async (error) => {
+        // TODO: catch this error in global handler
+        if (error.status === 0) {
+          const toast = await this.toastController.create({
+            message: 'No network error. Please try again',
+            duration: 4000,
+            color: 'danger'
+          });
+
+          loader.dismiss();
+          toast.present();
+        }
         console.log(error)
       });
   }
