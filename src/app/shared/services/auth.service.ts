@@ -35,7 +35,7 @@ export class AuthService {
     let platform$ = from(this.plt.ready());
     this.user = platform$.pipe(
       switchMap(() => {
-        return from(this.storage.get(TOKEN_KEY))
+        return from(this.storage.get(TOKEN_KEY));
       }),
       map(token => {
         console.log('Token from storage', token);
@@ -62,7 +62,7 @@ export class AuthService {
         let storage$ = from(this.storage.set(TOKEN_KEY, res.token));
         return storage$;
       })
-    )
+    );
   }
 
   getUser() {
@@ -74,7 +74,7 @@ export class AuthService {
       .then(() => {
         this.router.navigateByUrl('/');
         this.userData.next(null);
-      })
+      });
   }
 
 
