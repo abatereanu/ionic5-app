@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { NgxsModule } from '@ngxs/store';
+import { NgModule } from '@angular/core';
 
 import { AuctionFeedPageRoutingModule } from './auction-list-routing.module';
-
 import { AuctionListPage } from './page/auction-list/auction-list.page';
-import { NgxsModule } from '@ngxs/store';
 import { AuctionListState } from './store/auction-list.state';
 import { AuctionDetailsPage } from './page/auction-details/auction-details.page';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -17,6 +17,8 @@ import { AuctionDetailsPage } from './page/auction-details/auction-details.page'
     FormsModule,
     IonicModule,
     AuctionFeedPageRoutingModule,
+    MatChipsModule,
+    MatIconModule,
     NgxsModule.forFeature([AuctionListState]),
   ],
   declarations: [

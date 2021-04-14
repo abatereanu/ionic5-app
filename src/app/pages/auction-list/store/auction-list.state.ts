@@ -1,11 +1,14 @@
 import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
-import { append, patch} from '@ngxs/store/operators';
+import { append, patch, removeItem } from '@ngxs/store/operators';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 
 import { AuctionListDataService } from '../services/auction-list-data.service';
 import { AuctionModel } from '../../add-auction/models/auction.model';
-import { GetAuctionList } from './auction-list.actions';
-import { tap } from 'rxjs/operators';
+import { buildParams } from '../../../shared/utils/build-params';
+import { DeleteAuctionById, GetAuctionList, ResetActionList } from './auction-list.actions';
+import { SearchAuctionsStoreService } from '../../search-auctions/store/search-auctions.store.service';
+import { SearchAuctionParamsModel } from '../../search-auctions/model/search-auction-params.model';
 
 export interface AuctionListStateModel {
   auctionList: AuctionModel[];
@@ -21,7 +24,7 @@ export interface AuctionListStateModel {
 })
 @Injectable()
 export class AuctionListState {
-  constructor(private dataService: AuctionListDataService) {
+  constructor(private dataService: AuctionListDataService, private searchAuctionStoreService: SearchAuctionsStoreService) {
   }
 
   @Selector()
@@ -42,10 +45,45 @@ export class AuctionListState {
 
   @Action(GetAuctionList)
   getAuctionFeed(ctx: StateContext<AuctionListStateModel>, action: GetAuctionList) {
-    return this.dataService.getAuctionData(action.page)
+    const filters: SearchAuctionParamsModel = this.searchAuctionStoreService.selectedFilters;
+
+    const finalParams = {
+      'make-models': filters?.makeModels?.map((value) => {
+        const make = value.make;
+        const model = value.model;
+
+        return `${make}+${model}`;
+      }),
+      limit: 10,
+      mileage: filters?.mileage,
+      vehicleState: filters?.vehicleState,
+      fromYear: filters?.fromYear,
+      toYear: filters?.toYear,
+      page: action?.page,
+    };
+
+    const params: any = buildParams(finalParams);
+
+    return this.dataService.getAuctionList(params)
       .pipe(tap(response => {
         ctx.setState(patch({ auctionList: append(response.data), totalPages: response.totalPages}));
       }));
+  }
+
+  @Action(DeleteAuctionById)
+  deleteActionItemById(ctx: StateContext<AuctionListStateModel>, action: DeleteAuctionById) {
+
+    return this.dataService.removeAuctionById(action.id)
+      .pipe(tap(response => {
+        ctx.setState(patch({
+          auctionList: removeItem<AuctionModel>(auction => auction.id === action.id)
+        }));
+      }));
+  }
+
+  @Action(ResetActionList)
+  resetAuctionList(ctx: StateContext<AuctionListStateModel>) {
+    ctx.patchState({auctionList: null});
   }
 }
 

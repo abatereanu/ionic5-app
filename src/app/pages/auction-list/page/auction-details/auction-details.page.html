@@ -1,11 +1,11 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/tabs/auction-feed"></ion-back-button>
+            <ion-back-button defaultHref="/tabs/auction-list"></ion-back-button>
         </ion-buttons>
         <ion-title>Details</ion-title>
         <ion-buttons slot="end">
-            <ion-button>
+            <ion-button (click)="removeAuction(auctionDetails.id)">
                 <ion-icon name="trash" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -15,7 +15,7 @@
 <ion-content>
     <ion-slides *ngIf="auctionDetails?.images.length; else noImage" pager="true" [options]="slideOpts">
         <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
-            <ion-col>
+            <ion-col class="image">
                 <ion-img [src]="apiUrl + '/image/' + image?.id"></ion-img>
             </ion-col>
         </ion-slide>
@@ -83,6 +83,6 @@
           </ion-col>
         </ion-row>
     </ion-grid>
-    <div class="date">Post date: {{auctionDetails?.createdDate}}</div>
-    <div class="date">Author: {{auctionDetails?.username}}</div>
+    <div *ngIf="auctionDetails?.createdDate" class="date">Post date: {{auctionDetails?.createdDate}}</div>
+    <div *ngIf="auctionDetails?.username" class="date">Author: {{auctionDetails?.username}}</div>
 </ion-content>

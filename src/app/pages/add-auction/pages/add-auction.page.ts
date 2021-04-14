@@ -7,6 +7,7 @@ import { Actions, ofActionCompleted } from '@ngxs/store';
 import { AddAuction } from '../store/add-auction.actions';
 import dayjs from 'dayjs';
 import { take } from 'rxjs/operators';
+import carsAndModels from '../../../../assets/jsons/cars-and-models.json';
 
 @UntilDestroy()
 @Component({
@@ -17,6 +18,8 @@ import { take } from 'rxjs/operators';
 export class AddAuctionPage implements OnInit {
 
   @ViewChild('formDirective') formDirective: FormGroupDirective;
+  carsAndModels = carsAndModels;
+  availableModels = [];
   addAuctionForm: FormGroup;
   isFormSubmitted = false;
 
@@ -97,8 +100,9 @@ export class AddAuctionPage implements OnInit {
     this.initForm();
   }
 
-  onMakeSelected(e) {
-    console.log(e.detail.value);
+  onMakeSelected(event: CustomEvent) {
+    this.addAuctionForm.get('model').enable()
+    this.availableModels = carsAndModels[event.detail.value];
   }
 
 }

@@ -1,6 +1,8 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import {AlertController, NavController} from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+
 import { AuctionModel } from '../../../add-auction/models/auction.model';
-import { ActivatedRoute } from '@angular/router';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
 import { CONSTANTS } from '../../../../shared/constants/constants';
 
@@ -18,27 +20,50 @@ export class AuctionDetailsPage implements OnInit {
 
     constructor(
       private route: ActivatedRoute,
-      private storeService: AuctionListStoreService
+      private storeService: AuctionListStoreService,
+      private alertCtrl: AlertController,
+      private router: Router,
+      private navController: NavController,
     ) {
     }
 
 
     ngOnInit(): void {
-        this.route.paramMap.subscribe(paramMap => {
-            const auctionId = paramMap.get('id');
-            this.storeService.getAuctionById(auctionId)
-              .subscribe(result => {
-                  this.auctionDetails = result;
-                  console.log(this.auctionDetails);
-              });
-        });
-        this.slideOpts = {
-            initialSlide: 1,
-            speed: 400,
-            shadow: true,
-            slideShadows: true,
-            watchSlidesProgress: true,
+      this.route.paramMap.subscribe(paramMap => {
+        const auctionId = paramMap.get('id');
+        this.storeService.getAuctionById(auctionId)
+          .subscribe(result => {
+             this.auctionDetails = result;
+          });
+      });
+      this.slideOpts = {
+        initialSlide: 0,
+        speed: 400,
+        shadow: true,
+        slideShadows: true,
+        watchSlidesProgress: true,
         };
+    }
+
+
+    async removeAuction(id) {
+      const alert = await this.alertCtrl.create({
+        header: 'Remove auction',
+        message: 'Are you sure you want to remove the auction?',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.storeService.deleteAuctionById(id);
+              this.router.navigate(['tabs/auction-list']);
+            },
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+          }]
+      });
+      await alert.present();
     }
 
 }

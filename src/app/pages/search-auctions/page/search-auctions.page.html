@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Search auctions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="searchAuctionFormGroup" (ngSubmit)="onSubmitForm(searchAuctionFormGroup.getRawValue())">
+    <ion-card>
+      <ion-item [routerLink]="['cars-and-models']">
+        <ion-label>Make, Model:</ion-label>
+        <div formControlName="makeModels" class="value" ngDefaultControl>
+          <div *ngFor="let item of selectedFilters?.makeModels">
+            <span>{{item?.make}} </span>
+            <span *ngIf="item?.model !== 'Any'">{{item?.model}}</span>
+            <br/>
+          </div>
+        </div>
+      </ion-item>
+      <mat-form-field color="primary">
+        <mat-label>From-Till year</mat-label>
+        <mat-date-range-input [rangePicker]="fromTillYear" formGroupName="dateRange">
+          <input matStartDate formControlName="startDate" placeholder="Start date">
+          <input matEndDate formControlName="endDate" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="fromTillYear"></mat-datepicker-toggle>
+        <mat-date-range-picker #fromTillYear startView="year"></mat-date-range-picker>
+      </mat-form-field>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>Mileage</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-segment formControlName="mileageType" (ionChange)="transformMileageValue($event)">
+                <ion-segment-button value="kmh">km/h</ion-segment-button>
+                <ion-segment-button value="mph">mph</ion-segment-button>
+              </ion-segment>
+            </ion-col>
+            <ion-col>
+              <ion-input formControlName="mileage" class="ion-text-right"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Vehicle State:</ion-label>
+        <ion-select formControlName="vehicleState" interface="popover" value="BMW">
+          <ion-select-option value="new">New</ion-select-option>
+          <ion-select-option value="used">Used</ion-select-option>
+          <ion-select-option value="repair">Needs Repair</ion-select-option>
+          <ion-select-option value="parts">Parts Only</ion-select-option>
+          <ion-select-option value="none">--</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <ion-button class="apply-filter-button" expand="block" type="submit">Apply filter</ion-button>
+  </form>
+</ion-content>
+

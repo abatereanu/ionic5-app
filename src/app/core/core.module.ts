@@ -7,6 +7,7 @@ import { NgxsDispatchPluginModule } from '@ngxs-labs/dispatch-decorator';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
+import { EncodeHttpParamsInterceptorService } from './interceptors/encode-http-params-interceptor.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { HttpInterceptorService } from './interceptors/http-interceptor.service'
   ],
   declarations: [],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: EncodeHttpParamsInterceptorService, multi: true },
   ],
 })
 export class CoreModule {

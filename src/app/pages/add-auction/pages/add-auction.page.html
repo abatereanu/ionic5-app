@@ -11,16 +11,18 @@
   <form [formGroup]="addAuctionForm" (ngSubmit)="onFormSubmitted(addAuctionForm.getRawValue())" #formDirective="ngForm">
     <ion-list>
       <ion-item>
-        <ion-label>Add title</ion-label>
+        <ion-label position="floating">Title</ion-label>
         <ion-input formControlName="title"></ion-input>
       </ion-item>
+      <div class="error-field" *ngIf="addAuctionForm.get('title').errors && formDirective.submitted">
+        <div *ngIf="addAuctionForm.get('title').getError('required')">This field is required</div>
+      </div>
       <ion-item>
         <ion-label position="floating">Make</ion-label>
-        <ion-select formControlName="make" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
-          <ion-select-option value="BMW">BMW</ion-select-option>
-          <ion-select-option value="Audi">Audi</ion-select-option>
-          <ion-select-option value="Mercedes">Mercedes</ion-select-option>
-          <ion-select-option value="VW">Volkswagen</ion-select-option>
+        <ion-select formControlName="make" interface="popover" (ionChange)="onMakeSelected($event)">
+          <ng-container *ngFor="let cars of carsAndModels | keyvalue">
+            <ion-select-option [value]="cars.key">{{cars.key}}</ion-select-option>
+          </ng-container>
         </ion-select>
       </ion-item>
       <div class="error-field" *ngIf="addAuctionForm.get('make').errors && formDirective.submitted">
@@ -29,11 +31,10 @@
 
       <ion-item>
         <ion-label position="floating">Model</ion-label>
-        <ion-select formControlName="model" value="BMW">
-          <ion-select-option value="BMW">BMW</ion-select-option>
-          <ion-select-option value="Audi">Audi</ion-select-option>
-          <ion-select-option value="Mercedes">Mercedes</ion-select-option>
-          <ion-select-option value="VW">Volkswagen</ion-select-option>
+        <ion-select formControlName="model" interface="popover">
+          <ng-container *ngFor="let model of availableModels">
+            <ion-select-option [value]="model">{{model}}</ion-select-option>
+          </ng-container>
         </ion-select>
       </ion-item>
       <div class="error-field" *ngIf="addAuctionForm.get('model').errors && formDirective.submitted">

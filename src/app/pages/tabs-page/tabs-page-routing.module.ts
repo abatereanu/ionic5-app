@@ -17,12 +17,12 @@ const routes: Routes = [
         loadChildren: () => import('../auction-list/auction-list.module').then(m => m.AuctionListModule)
       },
       {
-        path: 'add-auction',
-        loadChildren: () => import('../../pages/add-auction/add-auction.module').then(m => m.AddAuctionModule)
+        path: 'search-auctions',
+        loadChildren: () => import('../../pages/search-auctions/search-auctions.module').then(m => m.SearchAuctionsModule)
       },
       {
-        path: 'friend-list',
-        loadChildren: () => import('../friend-list/pages/friend-list/friend-list.module').then(m => m.FriendListPageModule)
+        path: 'add-auction',
+        loadChildren: () => import('../../pages/add-auction/add-auction.module').then(m => m.AddAuctionModule)
       },
       {
         path: 'user-list',
