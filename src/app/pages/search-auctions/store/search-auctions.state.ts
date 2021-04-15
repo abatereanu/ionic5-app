@@ -5,7 +5,7 @@ import {ApplyAllFilters, ApplyMakeModelFilters, ResetAllFilters} from './search-
 import {patch, removeItem} from '@ngxs/store/operators';
 
 export interface SearchAuctionsStateModel {
-  makeModels: [{ make: string, model: string }];
+  makeModels: [];
   fromYear: number;
   toYear: number;
   mileage: number;
@@ -15,7 +15,7 @@ export interface SearchAuctionsStateModel {
 @State<SearchAuctionsStateModel>({
   name: 'auctionFilters',
   defaults: {
-    makeModels: null,
+    makeModels: [],
     fromYear: null,
     toYear: null,
     mileage: null,
@@ -49,13 +49,13 @@ export class SearchAuctionsState {
   }
 
   @Action(ResetAllFilters)
-  resetAllFilters(ctx: StateContext<SearchAuctionsStateModel>, action: ApplyAllFilters) {
+  resetAllFilters(ctx: StateContext<SearchAuctionsStateModel>) {
     return ctx.setState(patch({
-        makeModels: null,
+        makeModels: [],
         fromYear: null,
         toYear: null,
         mileage: null,
-        vehicleState: null}
-      ));
+        vehicleState: null
+    }));
   }
 }

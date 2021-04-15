@@ -27,7 +27,7 @@ export class ImageComponent implements OnChanges {
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly toastController: ToastController,
     private readonly loadingController: LoadingController
-    ) {
+  ) {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -73,21 +73,32 @@ export class ImageComponent implements OnChanges {
   }
 
   async addImage(source: CameraSource) {
-    const image = await Camera.getPhoto({
-      quality: 60,
-      allowEditing: true,
-      resultType: CameraResultType.Base64,
-      source
+    const loader = await this.loadingController.create({
+      message: 'Uploading images...',
     });
 
+    const image = await Camera.getPhoto({
+      quality: 60,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      saveToGallery: false,
+      source
+    })
+
+    loader.present();
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const imageName = 'Give me a name';
 
     this.imageDataService.uploadImages(blobData, imageName, image.format)
       .subscribe((newImages: ApiImage[]) => {
-        newImages.forEach(newImage => this.images.push(newImage));
-      }, error => {
-        console.log(error)
+        newImages.forEach(newImage => {
+          this.images.push(newImage);
+          this.imageIds = this.images.map(image => image.id);
+          this.formGroup.get('imageIds').setValue(this.imageIds);
+          loader.dismiss();
+        }, error => {
+          console.log(error)
+        });
       });
   }
 

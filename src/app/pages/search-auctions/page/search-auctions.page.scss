@@ -7,9 +7,14 @@
 }
 
 .mat-form-field {
-  margin: 10px 10px 20px;
+  margin: 0 10px 0;
   width: calc(100% - 10px);
   font-size: 17px;
+}
+
+ion-row {
+  align-items: center;
+  justify-content: center;
 }
 
 ion-item {

@@ -5,11 +5,11 @@
     </ion-buttons>
     <ion-title>Auction List</ion-title>
     <ion-buttons slot="end">
-      <!--<ion-button>
-        <ion-icon name="filter-outline" slot="icon-only"></ion-icon>
-      </ion-button>-->
+      <ion-button (click)="onFilterIconClick()">
+        <ion-icon name="filter" [ngClass]="activeFilters ? 'blue-filter': 'black-filter'" slot="start"></ion-icon>
+      </ion-button>
       <ion-button (click)="onLogout()">
-        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+        <ion-icon name="log-out" slot="end"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
