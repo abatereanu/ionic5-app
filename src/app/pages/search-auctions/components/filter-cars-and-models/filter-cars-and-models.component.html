@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="" (click)="applyFilters()"></ion-back-button>
+      <ion-back-button defaultHref="tabs/search-auctions" (click)="applyFilters()"></ion-back-button>
     </ion-buttons>
     <ion-title>Search</ion-title>
     <ion-buttons slot="end">
@@ -19,7 +19,7 @@
       <ion-icon name="close-circle" (click)="onDeleteFilter(i)"></ion-icon>
     </ion-chip>
   </ng-container>
-  <div class="filter-limit-error" [ngClass]="{'error-message' : filteredItems?.length > 2 && isErrorMessage}">Too many filtered items</div>
+  <div class="filter-limit-error" [ngClass]="{'error-message' : filteredItems?.length > 3}">Too many filtered items</div>
 
   <form [formGroup]="searchCarsModelsForm" (ngSubmit)="onFormSubmitted(searchCarsModelsForm.getRawValue())"
         #formDirective="ngForm">
