@@ -7,8 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MaterialModule } from '../../core/material.module';
 import { NgxsModule } from '@ngxs/store';
 import { AddAuctionState } from './store/add-auction.state';
-import { ImageComponent } from './components/image/image.component';
-import { ImageState } from './components/store/image.state';
+import { ImageModule } from '../../shared/modules/images-module/image.module';
 
 @NgModule({
   imports: [
@@ -16,13 +15,13 @@ import { ImageState } from './components/store/image.state';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    ImageModule,
     MaterialModule,
     AddAuctionRoutingModule,
-    NgxsModule.forFeature([AddAuctionState, ImageState]),
+    NgxsModule.forFeature([AddAuctionState]),
   ],
   declarations: [
     AddAuctionPage,
-    ImageComponent,
   ]
 })
 export class AddAuctionModule {}

@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { ApiImage, ImageDataService } from '../../services/image-data.service';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
-import { CONSTANTS } from '../../../../shared/constants/constants';
 import { FormGroup } from '@angular/forms';
+import { CONSTANTS } from '../../constants/constants';
+import { ApiImage, ImageDataService } from './service/image-data.service';
 
 const { Camera } = Plugins;
 

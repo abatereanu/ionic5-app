@@ -1,12 +1,12 @@
 export class UploadImageFiles {
-  static readonly type = '[Auction] Upload Image Files';
+  static readonly type = '[Shared] Upload Image Files';
 
   constructor(public images: FileList) {
   }
 }
 
 export class DeleteImage {
-  static readonly type = '[Auction] Delete Image';
+  static readonly type = '[Shared] Delete Image';
 
   constructor(public id: string) {
   }

@@ -4,7 +4,7 @@ import { DeleteImage, UploadImageFiles } from './image.actions';
 import { Select } from '@ngxs/store';
 import { ImageState } from './image.state';
 import { Observable } from 'rxjs';
-import { ApiImage } from '../../services/image-data.service';
+import { ApiImage } from '../service/image-data.service';
 
 @Injectable({providedIn: 'root'})
 export class ImageStoreService {
