@@ -1,11 +1,9 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { AddAuction } from '../../store/add-auction.actions';
-import { ImageDataService } from '../../services/image-data.service';
 import { DeleteImage, UploadImageFiles } from './image.actions';
 import { tap } from 'rxjs/operators';
 import { patch } from '@ngxs/store/operators';
-import { UserListStateModel } from '../../../user-list/store/user-list.state';
+import { ImageDataService } from '../service/image-data.service';
 
 @State<any>({
   name: 'image',
