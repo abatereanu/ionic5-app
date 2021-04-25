@@ -3,11 +3,12 @@ import {Injectable} from '@angular/core';
 import {AuctionListDataService} from '../../auction-list/services/auction-list-data.service';
 import {ApplyAllFilters, ApplyMakeModelFilters, ResetAllFilters} from './search-auctions.actions';
 import {patch, removeItem} from '@ngxs/store/operators';
+import dayjs from 'dayjs';
 
 export interface SearchAuctionsStateModel {
   makeModels: [];
-  fromYear: number;
-  toYear: number;
+  fromYear: string;
+  toYear: string;
   mileage: number;
   vehicleState: 'new' | 'used' | 'repair' | 'parts';
 }
@@ -43,8 +44,8 @@ export class SearchAuctionsState {
     return ctx.setState(patch({
       mileage: action.filters.mileage,
       vehicleState: action.filters.vehicleState,
-      fromYear: action.filters.startDate,
-      toYear: action.filters.endDate,
+      fromYear: action.filters.fromYear && dayjs(action.filters.fromYear).format('YYYY-MM-DD'),
+      toYear: action.filters.toYear && dayjs(action.filters.toYear).format('YYYY-MM-DD'),
     }));
   }
 
