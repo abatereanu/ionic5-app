@@ -43,7 +43,7 @@
 
       <ion-item>
         <ion-label position="floating">Year</ion-label>
-        <ion-datetime formControlName="year" displayFormat="MMM YYYY" min="1960" max="2020"></ion-datetime>
+        <ion-datetime formControlName="year" displayFormat="MMM YYYY" min="1960"></ion-datetime>
       </ion-item>
       <div class="error-field" *ngIf="addAuctionForm.get('year').errors && formDirective.submitted">
         <div *ngIf="addAuctionForm.get('year').getError('required')">This field is required</div>
@@ -73,7 +73,7 @@
 
       <ion-item>
         <ion-label position="floating">Vehicle State</ion-label>
-        <ion-select formControlName="vehicleState" interface="popover" value="BMW" (ionChange)="onMakeSelected($event)">
+        <ion-select formControlName="vehicleState" interface="popover">
           <ion-select-option value="new">New</ion-select-option>
           <ion-select-option value="used">Used</ion-select-option>
           <ion-select-option value="repair">Needs Repair</ion-select-option>

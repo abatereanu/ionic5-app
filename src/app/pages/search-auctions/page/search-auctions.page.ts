@@ -34,6 +34,8 @@ export class SearchAuctionsPage implements OnInit {
     this.searchAuctionFormGroup.get('mileageType').setValue(this.searchAuctionsStoreService.selectedFilters.mileageType || 'kmh');
     this.searchAuctionFormGroup.get('mileage').setValue(this.searchAuctionsStoreService.selectedFilters.mileage);
     this.searchAuctionFormGroup.get('vehicleState').setValue(this.searchAuctionsStoreService.selectedFilters.vehicleState);
+    this.searchAuctionFormGroup.get('dateRange').get('fromYear').setValue(this.searchAuctionsStoreService.selectedFilters.fromYear);
+    this.searchAuctionFormGroup.get('dateRange').get('toYear').setValue(this.searchAuctionsStoreService.selectedFilters.toYear);
   }
 
   initForm() {
@@ -43,8 +45,8 @@ export class SearchAuctionsPage implements OnInit {
       vehicleState: [undefined],
       mileageType: [],
       dateRange: this.formBuilder.group({
-        startDate: [undefined],
-        endDate: [undefined],
+        fromYear: [undefined],
+        toYear: [undefined],
       }),
     });
   }
@@ -53,15 +55,14 @@ export class SearchAuctionsPage implements OnInit {
     this.router.navigate(['cars-and-models'], {relativeTo: this.route});
   }
 
-
   onSubmitForm(value) {
     if (!this.searchAuctionFormGroup.invalid) {
       this.searchAuctionsStoreService.applyAllFilters({
         makeModels: value.makeModels,
         mileage: value.mileage,
-        vehicleState: (value.vehicleState === 'none') ? undefined : value.vehicleState,
-        fromYear: value.dateRange.startDate,
-        toYear: value.dateRange.endDate,
+        vehicleState: value.vehicleState,
+        fromYear: value.dateRange.fromYear,
+        toYear: value.dateRange.toYear,
       });
     }
     this.router.navigateByUrl('tabs/auction-list');

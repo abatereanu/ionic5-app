@@ -9,6 +9,9 @@ export function buildParams(params: any) {
   let target = new HttpParams();
   Object.keys(params).forEach((key) => {
     const value = params[key];
+    if (Array.isArray(value) && !value.length) {
+      return;
+    }
     if (typeof value !== 'undefined' && value !== null) {
       target = target.append(key, value.toString());
     }

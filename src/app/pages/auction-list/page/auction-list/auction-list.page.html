@@ -43,7 +43,7 @@
           <ion-img *ngIf="i === 0" [src]="apiUrl + '/image/' + image?.id"></ion-img>
         </div>
         <div class="description">
-          Date of publication: {{auction?.createdDate}}
+          Date of publication: {{auction?.createdDate | date : 'dd/MM/YYYY'}}
         </div>
       </ion-card-content>
 

@@ -23,8 +23,8 @@
       <mat-form-field color="primary">
         <mat-label>From-Till year</mat-label>
         <mat-date-range-input [rangePicker]="fromTillYear" formGroupName="dateRange">
-          <input matStartDate formControlName="startDate" placeholder="Start date">
-          <input matEndDate formControlName="endDate" placeholder="End date">
+          <input matStartDate formControlName="fromYear" placeholder="Start date">
+          <input matEndDate formControlName="toYear" placeholder="End date">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="fromTillYear"></mat-datepicker-toggle>
         <mat-date-range-picker #fromTillYear startView="year"></mat-date-range-picker>
@@ -50,11 +50,11 @@
       <ion-item>
         <ion-label position="floating">Vehicle State:</ion-label>
         <ion-select formControlName="vehicleState" interface="popover" value="BMW">
+          <ion-select-option value="">--</ion-select-option>
           <ion-select-option value="new">New</ion-select-option>
           <ion-select-option value="used">Used</ion-select-option>
           <ion-select-option value="repair">Needs Repair</ion-select-option>
           <ion-select-option value="parts">Parts Only</ion-select-option>
-          <ion-select-option value="none">--</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card>
