@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 
 import { AuctionListDataService } from '../services/auction-list-data.service';
-import { AuctionModel } from '../../add-auction/models/auction.model';
+import type { AuctionModel } from '../../add-auction/models/auction.model';
 import { buildParams } from '../../../shared/utils/build-params';
 import { DeleteAuctionById, GetAuctionList, ResetActionList } from './auction-list.actions';
 import { SearchAuctionsStoreService } from '../../search-auctions/store/search-auctions.store.service';
-import { SearchAuctionParamsModel } from '../../search-auctions/model/search-auction-params.model';
+import type { SearchAuctionParamsModel } from '../../search-auctions/model/search-auction-params.model';
 
 export interface AuctionListStateModel {
   auctionList: AuctionModel[];
@@ -20,12 +20,14 @@ export interface AuctionListStateModel {
   defaults: {
     auctionList: null,
     totalPages: 0,
-  }
+  },
 })
 @Injectable()
 export class AuctionListState {
-  constructor(private dataService: AuctionListDataService, private searchAuctionStoreService: SearchAuctionsStoreService) {
-  }
+  constructor(
+    private dataService: AuctionListDataService,
+    private searchAuctionStoreService: SearchAuctionsStoreService,
+  ) {}
 
   @Selector()
   static getAuctions(state: AuctionListStateModel) {
@@ -38,9 +40,9 @@ export class AuctionListState {
   }
 
   static getAuctionById(id: keyof AuctionListStateModel): (state: AuctionListStateModel) => any {
-    return createSelector([AuctionListState], (state) => {
-      return state.auctionList.find(auction => auction.id === id);
-    });
+    return createSelector([AuctionListState], (state) =>
+      state.auctionList.find((auction) => auction.id === id),
+    );
   }
 
   @Action(GetAuctionList)
@@ -49,8 +51,8 @@ export class AuctionListState {
 
     const finalParams = {
       'make-models': filters?.makeModels?.map((value) => {
-        const make = value.make;
-        const model = value.model;
+        const { make } = value;
+        const { model } = value;
 
         return `${make}+${model}`;
       }),
@@ -64,26 +66,30 @@ export class AuctionListState {
 
     const params: any = buildParams(finalParams);
 
-    return this.dataService.getAuctionList(params)
-      .pipe(tap(response => {
-        ctx.setState(patch({ auctionList: append(response.data), totalPages: response.totalPages}));
-      }));
+    return this.dataService.getAuctionList(params).pipe(
+      tap((response) => {
+        ctx.setState(
+          patch({ auctionList: append(response.data), totalPages: response.totalPages }),
+        );
+      }),
+    );
   }
 
   @Action(DeleteAuctionById)
   deleteActionItemById(ctx: StateContext<AuctionListStateModel>, action: DeleteAuctionById) {
-
-    return this.dataService.removeAuctionById(action.id)
-      .pipe(tap(response => {
-        ctx.setState(patch({
-          auctionList: removeItem<AuctionModel>(auction => auction.id === action.id)
-        }));
-      }));
+    return this.dataService.removeAuctionById(action.id).pipe(
+      tap(() => {
+        ctx.setState(
+          patch({
+            auctionList: removeItem<AuctionModel>((auction) => auction.id === action.id),
+          }),
+        );
+      }),
+    );
   }
 
   @Action(ResetActionList)
   resetAuctionList(ctx: StateContext<AuctionListStateModel>) {
-    ctx.patchState({auctionList: null});
+    ctx.patchState({ auctionList: null });
   }
 }
-

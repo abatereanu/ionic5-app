@@ -1,46 +1,39 @@
 import { Actions, ofActionCompleted } from '@ngxs/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { delay, filter } from 'rxjs/operators';
-import { ActionSheetController, IonInfiniteScroll, IonRefresher, MenuController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  IonInfiniteScroll,
+  IonRefresher,
+  MenuController,
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 
-import { ApplyAllFilters } from '../../../search-auctions/store/search-auctions.actions';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  ApplyAllFilters,
+  ResetAllFilters,
+} from '../../../search-auctions/store/search-auctions.actions';
 import { AuctionModel } from '../../../add-auction/models/auction.model';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { CONSTANTS } from '../../../../shared/constants/constants';
 import { SearchAuctionsStoreService } from '../../../search-auctions/store/search-auctions.store.service';
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-auction-feed',
   templateUrl: './auction-list.page.html',
   styleUrls: ['./auction-list.page.scss'],
 })
 export class AuctionListPage implements OnInit {
-
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) refresher: IonRefresher;
-
   apiUrl = CONSTANTS.API_URL;
   auctionList: AuctionModel[] = [];
   private page = 0;
   eventType = '';
-
-  get activeFilters() {
-    if (!this.searchAuctionsStoreService.selectedFilters) {
-      return;
-    }
-    const hasActiveFilters = Object.entries(this.searchAuctionsStoreService.selectedFilters)
-      .some(([key, value]: [string, any]) => {
-        if (Array.isArray(value)) {
-          return value.length
-        } else {
-          return !!value
-        }
-      })
-    return hasActiveFilters;
-  }
+  activeFilters = false;
 
   constructor(
     private menu: MenuController,
@@ -50,23 +43,25 @@ export class AuctionListPage implements OnInit {
     private searchAuctionsStoreService: SearchAuctionsStoreService,
     private router: Router,
     private actions$: Actions,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.actions$
-      .pipe(ofActionCompleted(ApplyAllFilters))
-      .subscribe(() => {
-        this.page = 0;
-        this.getAuctions(this.page);
-      });
+    this.actions$.pipe(untilDestroyed(this), ofActionCompleted(ApplyAllFilters)).subscribe(() => {
+      this.page = 0;
+      this.getAuctions(this.page);
+      this.activeFilters = this.checkActiveFilters();
+    });
+
+    this.actions$.pipe(untilDestroyed(this), ofActionCompleted(ResetAllFilters)).subscribe(() => {
+      this.activeFilters = false;
+    });
 
     this.auctionListStoreService.auctions$
       .pipe(
-        filter(auctionList => !!auctionList),
-        delay(1000)
+        filter((auctionList) => !!auctionList),
+        delay(1000),
       )
-      .subscribe(auctionList => {
+      .subscribe((auctionList) => {
         if (this.eventType === 'ionRefresh') {
           this.auctionList = auctionList;
           this.refresher.complete();
@@ -81,7 +76,6 @@ export class AuctionListPage implements OnInit {
 
     this.getAuctions(this.page);
   }
-
 
   loadData(event: any) {
     if (event.type === 'ionRefresh') {
@@ -99,29 +93,44 @@ export class AuctionListPage implements OnInit {
     this.auctionListStoreService.getAuctionList(page);
   }
 
+  checkActiveFilters(): boolean {
+    if (!this.searchAuctionsStoreService.selectedFilters) {
+      return false;
+    }
+    return Object.values(this.searchAuctionsStoreService.selectedFilters).some(
+      (value: string | any) => {
+        if (Array.isArray(value)) {
+          return value.length;
+        }
+        return !!value;
+      },
+    );
+  }
+
   async onFilterIconClick() {
     const actionCtrl = await this.actionSheetCtrl.create({
       header: 'Active Filters',
-      buttons: [{
-       text: 'Clear All Filters',
-       handler: () => {
-         if (this.activeFilters) {
-           this.resetAuctionList(true);
-           this.getAuctions(this.page);
-         }
-       }
-      },{
-        text: 'Apply Filters',
-        handler: () => {
-          this.router.navigateByUrl('tabs/search-auctions');
-        }
-      }, {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      buttons: [
+        {
+          text: 'Clear All Filters',
+          handler: () => {
+            if (this.activeFilters) {
+              this.resetAuctionList(true);
+              this.getAuctions(this.page);
+            }
+          },
+        },
+        {
+          text: 'Apply Filters',
+          handler: () => {
+            this.router.navigateByUrl('tabs/search-auctions');
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
     });
 
     await actionCtrl.present();
@@ -139,5 +148,4 @@ export class AuctionListPage implements OnInit {
   onLogout() {
     this.authService.logout();
   }
-
 }

@@ -7,16 +7,18 @@ describe('SearchAuctionsComponent', () => {
   let component: SearchAuctionsPage;
   let fixture: ComponentFixture<SearchAuctionsPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SearchAuctionsPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SearchAuctionsPage],
+        imports: [IonicModule.forRoot()],
+      }).compileComponents();
 
-    fixture = TestBed.createComponent(SearchAuctionsPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+      fixture = TestBed.createComponent(SearchAuctionsPage);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    }),
+  );
 
   it('should create', () => {
     expect(component).toBeTruthy();

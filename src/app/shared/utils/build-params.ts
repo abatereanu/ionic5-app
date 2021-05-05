@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 
-
 export function buildParams(params: any) {
   if (!params || typeof params !== 'object') {
     return null;

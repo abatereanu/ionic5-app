@@ -7,16 +7,18 @@ describe('UserManagementPage', () => {
   let component: UserListPage;
   let fixture: ComponentFixture<UserListPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UserListPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [UserListPage],
+        imports: [IonicModule.forRoot()],
+      }).compileComponents();
 
-    fixture = TestBed.createComponent(UserListPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+      fixture = TestBed.createComponent(UserListPage);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    }),
+  );
 
   it('should create', () => {
     expect(component).toBeTruthy();

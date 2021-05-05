@@ -18,6 +18,6 @@ import { MaterialModule } from '../../core/material.module';
     ReactiveFormsModule,
     MaterialModule,
   ],
-  declarations: [RegisterPage]
+  declarations: [RegisterPage],
 })
 export class RegisterPageModule {}

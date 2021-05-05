@@ -1,19 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Chart} from 'chart.js';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Chart } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-
   chart;
-  constructor(private readonly router: Router) { }
+
+  constructor(private readonly router: Router) {}
 
   ngOnInit() {
-
     this.chart = new Chart('myChart', {
       type: 'line',
       data: {
@@ -33,31 +31,33 @@ export class SettingsPage implements OnInit {
               '#FF00FF',
               'Blue',
               'Red',
-              'Blue'
+              'Blue',
             ],
-            fill: false
-          }
-        ]
+            fill: false,
+          },
+        ],
       },
       options: {
         legend: {
-          display: true
+          display: true,
         },
         scales: {
-          xAxes: [{
-            display: true
-          }],
-          yAxes: [{
-            display: true
-          }],
-        }
-      }
+          xAxes: [
+            {
+              display: true,
+            },
+          ],
+          yAxes: [
+            {
+              display: true,
+            },
+          ],
+        },
+      },
     });
   }
-
 
   goToUserConfiguration() {
     this.router.navigate(['user-management']);
   }
-
- }
+}

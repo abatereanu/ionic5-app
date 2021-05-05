@@ -1,6 +1,11 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  LoadingController,
+  Platform,
+  ToastController,
+} from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
 import { CONSTANTS } from '../../constants/constants';
 import { ApiImage, ImageDataService } from './service/image-data.service';
@@ -26,9 +31,8 @@ export class ImageComponent implements OnChanges {
     private readonly plt: Platform,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly toastController: ToastController,
-    private readonly loadingController: LoadingController
-  ) {
-  }
+    private readonly loadingController: LoadingController,
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.formSubmitted?.currentValue) {
@@ -43,15 +47,15 @@ export class ImageComponent implements OnChanges {
         icon: 'camera',
         handler: () => {
           this.addImage(CameraSource.Camera);
-        }
+        },
       },
       {
         text: 'Choose From Photos Photo',
         icon: 'image',
         handler: () => {
           this.addImage(CameraSource.Photos);
-        }
-      }
+        },
+      },
     ];
 
     // Only allow file selection inside a browser
@@ -61,13 +65,13 @@ export class ImageComponent implements OnChanges {
         icon: 'attach',
         handler: () => {
           this.fileInput.nativeElement.click();
-        }
+        },
       });
     }
 
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Select Image Source',
-      buttons
+      buttons,
     });
     await actionSheet.present();
   }
@@ -82,23 +86,27 @@ export class ImageComponent implements OnChanges {
       allowEditing: false,
       resultType: CameraResultType.Base64,
       saveToGallery: false,
-      source
-    })
+      source,
+    });
 
     loader.present();
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const imageName = 'Give me a name';
 
-    this.imageDataService.uploadImages(blobData, imageName, image.format)
+    this.imageDataService
+      .uploadImages(blobData, imageName, image.format)
       .subscribe((newImages: ApiImage[]) => {
-        newImages.forEach(newImage => {
-          this.images.push(newImage);
-          this.imageIds = this.images.map(image => image.id);
-          this.formGroup.get('imageIds').setValue(this.imageIds);
-          loader.dismiss();
-        }, error => {
-          console.log(error)
-        });
+        newImages.forEach(
+          (newImage) => {
+            this.images.push(newImage);
+            this.imageIds = this.images.map((img) => img.id);
+            this.formGroup.get('imageIds').setValue(this.imageIds);
+            loader.dismiss();
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
       });
   }
 
@@ -111,46 +119,49 @@ export class ImageComponent implements OnChanges {
 
     const eventObj: MSInputMethodContext = event as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    const files: FileList = target.files;
+    const { files } = target;
 
-    this.imageDataService.uploadImageFiles(files)
-      .subscribe((newImages: ApiImage[]) => {
-        newImages.forEach(newImage => {
+    this.imageDataService.uploadImageFiles(files).subscribe(
+      (newImages: ApiImage[]) => {
+        newImages.forEach((newImage) => {
           this.images.push(newImage);
-          this.imageIds = this.images.map(image => image.id);
+          this.imageIds = this.images.map((img) => img.id);
           this.formGroup.get('imageIds').setValue(this.imageIds);
           loader.dismiss();
         });
-      }, async (error) => {
+      },
+      async (error) => {
         // TODO: catch this error in global handler
         if (error.status === 0) {
           const toast = await this.toastController.create({
             message: 'No network error. Please try again',
             duration: 4000,
-            color: 'danger'
+            color: 'danger',
           });
 
           loader.dismiss();
           toast.present();
         }
-        console.log(error)
-      });
+        console.log(error);
+      },
+    );
   }
 
-
   deletePhoto(i: number, image: ApiImage) {
-    this.imageDataService.deleteImage(image.id)
-      .subscribe(async () => {
+    this.imageDataService.deleteImage(image.id).subscribe(
+      async () => {
         this.images.splice(i, 1);
-      }, async (error) => {
+      },
+      async () => {
         const toast = await this.toastController.create({
-          message: 'Selected image doesn\'t exist',
+          message: "Selected image doesn't exist",
           duration: 4000,
-          color: 'danger'
+          color: 'danger',
         });
         this.images.splice(i, 1);
         toast.present();
-      });
+      },
+    );
   }
 
   // Helper function
@@ -173,5 +184,4 @@ export class ImageComponent implements OnChanges {
 
     return new Blob(byteArrays, { type: contentType });
   }
-
 }

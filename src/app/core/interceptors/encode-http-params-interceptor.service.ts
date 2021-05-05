@@ -1,24 +1,14 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpParameterCodec,
   HttpParams,
-  HttpRequest
+  HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class EncodeHttpParamsInterceptorService implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const params = new HttpParams({ encoder: new CustomEncoder(), fromString: req.params.toString() });
-    return next.handle(req.clone({ params }));
-  }
-}
-
 
 class CustomEncoder implements HttpParameterCodec {
   encodeKey(key: string): string {
@@ -35,5 +25,18 @@ class CustomEncoder implements HttpParameterCodec {
 
   decodeValue(value: string): string {
     return decodeURIComponent(value);
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class EncodeHttpParamsInterceptorService implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const params = new HttpParams({
+      encoder: new CustomEncoder(),
+      fromString: req.params.toString(),
+    });
+    return next.handle(req.clone({ params }));
   }
 }

@@ -14,13 +14,8 @@ import { ImageComponent } from './image.component';
     ReactiveFormsModule,
     NgxsModule.forFeature([ImageState]),
   ],
-  declarations: [
-    ImageComponent
-  ],
-  providers: [
-  ],
-  exports: [
-    ImageComponent
-  ],
+  declarations: [ImageComponent],
+  providers: [],
+  exports: [ImageComponent],
 })
 export class ImageModule {}

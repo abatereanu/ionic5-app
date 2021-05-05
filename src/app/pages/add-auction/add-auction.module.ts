@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { AddAuctionRoutingModule } from './add-auction-routing.module';
-import { AddAuctionPage } from './pages/add-auction.page';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { MaterialModule } from '../../core/material.module';
 import { NgxsModule } from '@ngxs/store';
+import { MaterialModule } from '../../core/material.module';
+import { AddAuctionPage } from './pages/add-auction.page';
+import { AddAuctionRoutingModule } from './add-auction-routing.module';
 import { AddAuctionState } from './store/add-auction.state';
 import { ImageModule } from '../../shared/modules/images-module/image.module';
 
@@ -20,8 +20,6 @@ import { ImageModule } from '../../shared/modules/images-module/image.module';
     AddAuctionRoutingModule,
     NgxsModule.forFeature([AddAuctionState]),
   ],
-  declarations: [
-    AddAuctionPage,
-  ]
+  declarations: [AddAuctionPage],
 })
 export class AddAuctionModule {}

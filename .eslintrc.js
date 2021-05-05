@@ -29,8 +29,10 @@ module.exports = {
         'linebreak-style': ['error', 'windows'],
         'import/prefer-default-export': 'off',
         'class-methods-use-this': 'off',
+        'no-plusplus': 'off',
         '@typescript-eslint/lines-between-class-members': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/consistent-type-imports': 'off',
         'prettier/prettier': [
           'error',
           {

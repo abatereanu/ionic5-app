@@ -13,6 +13,7 @@ import { AuctionListStoreService } from '../../auction-list/store/auction-list-s
 })
 export class SearchAuctionsPage implements OnInit {
   selectedFilters: SearchAuctionsStateModel;
+
   searchAuctionFormGroup: FormGroup = new FormGroup({});
 
   constructor(
@@ -21,8 +22,7 @@ export class SearchAuctionsPage implements OnInit {
     private searchAuctionsStoreService: SearchAuctionsStoreService,
     private auctionListStoreService: AuctionListStoreService,
     private formBuilder: FormBuilder,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -30,12 +30,26 @@ export class SearchAuctionsPage implements OnInit {
 
   ionViewWillEnter() {
     this.selectedFilters = this.searchAuctionsStoreService.selectedFilters;
-    this.searchAuctionFormGroup.get('makeModels').setValue(this.searchAuctionsStoreService.selectedFilters.makeModels);
-    this.searchAuctionFormGroup.get('mileageType').setValue(this.searchAuctionsStoreService.selectedFilters.mileageType || 'kmh');
-    this.searchAuctionFormGroup.get('mileage').setValue(this.searchAuctionsStoreService.selectedFilters.mileage);
-    this.searchAuctionFormGroup.get('vehicleState').setValue(this.searchAuctionsStoreService.selectedFilters.vehicleState);
-    this.searchAuctionFormGroup.get('dateRange').get('fromYear').setValue(this.searchAuctionsStoreService.selectedFilters.fromYear);
-    this.searchAuctionFormGroup.get('dateRange').get('toYear').setValue(this.searchAuctionsStoreService.selectedFilters.toYear);
+    this.searchAuctionFormGroup
+      .get('makeModels')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.makeModels);
+    this.searchAuctionFormGroup
+      .get('mileageType')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.mileageType || 'kmh');
+    this.searchAuctionFormGroup
+      .get('mileage')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.mileage);
+    this.searchAuctionFormGroup
+      .get('vehicleState')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.vehicleState);
+    this.searchAuctionFormGroup
+      .get('dateRange')
+      .get('fromYear')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.fromYear);
+    this.searchAuctionFormGroup
+      .get('dateRange')
+      .get('toYear')
+      .setValue(this.searchAuctionsStoreService.selectedFilters.toYear);
   }
 
   initForm() {
@@ -52,7 +66,7 @@ export class SearchAuctionsPage implements OnInit {
   }
 
   setMakeModelFilter() {
-    this.router.navigate(['cars-and-models'], {relativeTo: this.route});
+    this.router.navigate(['cars-and-models'], { relativeTo: this.route });
   }
 
   onSubmitForm(value) {
@@ -69,14 +83,14 @@ export class SearchAuctionsPage implements OnInit {
     this.resetSearchFilters();
   }
 
-
   transformMileageValue(event: CustomEvent) {
     const mileageValueFormControl = this.searchAuctionFormGroup.get('mileage');
     const milageValue = mileageValueFormControl.value;
     if (milageValue === null) {
       return;
     }
-    const finalMilageValue = (event.detail.value === 'mph') ? ((milageValue * 0.6).toFixed()) : ((milageValue / 0.6).toFixed());
+    const finalMilageValue =
+      event.detail.value === 'mph' ? (milageValue * 0.6).toFixed() : (milageValue / 0.6).toFixed();
     mileageValueFormControl.setValue(finalMilageValue);
   }
 
