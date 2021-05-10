@@ -1,4 +1,4 @@
-import { ImageModel } from './image.model';
+import type { ImageModel } from './image.model';
 
 export interface AuctionModel {
   id: string;

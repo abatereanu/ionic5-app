@@ -7,11 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SearchAuctionsPage,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'cars-and-models',
-    component: FilterCarsAndModelsComponent
+    component: FilterCarsAndModelsComponent,
   },
 ];
 

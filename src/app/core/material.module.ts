@@ -13,9 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports: [
     MatTableModule,
     MatStepperModule,
@@ -29,6 +27,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatPaginatorModule,
     MatSortModule,
-  ]
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

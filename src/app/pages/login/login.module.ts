@@ -16,8 +16,8 @@ import { MaterialModule } from '../../core/material.module';
     IonicModule,
     ReactiveFormsModule,
     MaterialModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
 })
 export class LoginPageModule {}

@@ -9,9 +9,24 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "eslint": "eslint --max-warnings 0 --ext .js \"src/**/*.ts\"",
+    "stylelint": "stylelint \"src/app/**/*.scss\"",
+    "stylelint:fix": "stylelint --fix \"src/app/**/*.scss\""
   },
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/!(test)/!(*.spec).ts": [
+      "pretty-quick --staged",
+      "eslint"
+    ],
+    "*.scss": "stylelint"
+  },
   "dependencies": {
     "@angular/animations": "~11.2.8",
     "@angular/cdk": "^11.2.7",
@@ -66,6 +81,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "4.3.8",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.2",
@@ -73,8 +89,14 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "protractor": "~7.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-prettier": "^1.2.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.1.5"

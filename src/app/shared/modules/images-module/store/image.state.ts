@@ -1,21 +1,19 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { DeleteImage, UploadImageFiles } from './image.actions';
 import { tap } from 'rxjs/operators';
 import { patch } from '@ngxs/store/operators';
+import { DeleteImage, UploadImageFiles } from './image.actions';
 import { ImageDataService } from '../service/image-data.service';
 
 @State<any>({
   name: 'image',
   defaults: {
     images: [],
-  }
+  },
 })
 @Injectable()
 export class ImageState {
-
-  constructor(private dataService: ImageDataService) {
-  }
+  constructor(private dataService: ImageDataService) {}
 
   @Selector()
   static getImages(state: any) {
@@ -24,9 +22,10 @@ export class ImageState {
 
   @Action(UploadImageFiles)
   uploadImageFiles(ctx: StateContext<any>, action: UploadImageFiles) {
-    return this.dataService.uploadImageFiles(action.images)
+    return this.dataService
+      .uploadImageFiles(action.images)
       .pipe(
-        tap(response => ctx.setState(patch({ images: ctx.getState().images.concat(response) })))
+        tap((response) => ctx.setState(patch({ images: ctx.getState().images.concat(response) }))),
       );
   }
 
@@ -35,9 +34,6 @@ export class ImageState {
     const images = [...ctx.getState().images];
     const index = images.findIndex((image) => image.id === action.id);
     images.splice(index, 1);
-    return this.dataService.deleteImage(action.id)
-      .pipe(
-        tap(response => ctx.setState(patch({ images })))
-      );
+    return this.dataService.deleteImage(action.id).pipe(tap(() => ctx.setState(patch({ images }))));
   }
 }

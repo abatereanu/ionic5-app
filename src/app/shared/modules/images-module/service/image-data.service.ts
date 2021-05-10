@@ -10,12 +10,10 @@ export interface ApiImage {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageDataService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getImages() {
     return this.http.get<ApiImage[]>(`${CONSTANTS.API_URL}/image`);
@@ -37,7 +35,7 @@ export class ImageDataService {
       formData.append('name', files.item(i).name);
     }
 
-    return this.http.post(`${CONSTANTS.API_URL}/image`, formData);
+    return this.http.post<ApiImage[]>(`${CONSTANTS.API_URL}/image`, formData);
   }
 
   deleteImage(id) {

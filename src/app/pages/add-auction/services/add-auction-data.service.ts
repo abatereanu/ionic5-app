@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuctionRequestModel } from '../models/auction-request.model';
 import { CONSTANTS } from '../../../shared/constants/constants';
-import { ApiResponse } from '../../../shared/model/api-response.model';
-
+import type { ApiResponse } from '../../../shared/model/api-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AddAuctionDataService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   addAuction(data: AuctionRequestModel) {
-    return this.http.post<ApiResponse<AuctionRequestModel>>(CONSTANTS.API_URL + '/auction', data);
+    return this.http.post<ApiResponse<AuctionRequestModel>>(`${CONSTANTS.API_URL}/auction`, data);
   }
 }

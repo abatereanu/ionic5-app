@@ -4,8 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, NavController } from '@ionic/angular';
 
 import { AuthService } from '../../shared/services/auth.service';
-import { UserRequestModel } from '../../shared/model/user-request.model';
-
+import type { UserRequestModel } from '../../shared/model/user-request.model';
 
 @Component({
   selector: 'app-register',
@@ -13,17 +12,14 @@ import { UserRequestModel } from '../../shared/model/user-request.model';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-
   registerForm: FormGroup;
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly authService: AuthService,
-      private readonly navController: NavController,
-      private readonly alertController: AlertController,
-  ) {
-  }
-
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly navController: NavController,
+    private readonly alertController: AlertController,
+  ) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -33,37 +29,35 @@ export class RegisterPage implements OnInit {
     });
   }
 
-
   createUser(formValue: any) {
     const credentials: UserRequestModel = {
       username: formValue.username,
       password: formValue.password,
     };
-    this.authService.registerUser(credentials)
-        .subscribe((response) => {
-          this.navController.back();
-        }, error => {
-          this.openAlert(error?.error?.message);
-        });
+    this.authService.registerUser(credentials).subscribe(
+      () => {
+        this.navController.back();
+      },
+      (error) => {
+        this.openAlert(error?.error?.message);
+      },
+    );
   }
-
 
   async openAlert(message) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }
 
-
-  checkPasswordValidator(control: FormControl): {[s: string]: boolean} {
-    if (this.registerForm && (control.value !== this.registerForm.get('password').value)) {
-      return {passwordNotMatch: true};
+  checkPasswordValidator(control: FormControl): { [s: string]: boolean } {
+    if (this.registerForm && control.value !== this.registerForm.get('password').value) {
+      return { passwordNotMatch: true };
     }
 
     return null;
   }
-
 }

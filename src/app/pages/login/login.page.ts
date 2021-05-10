@@ -1,17 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   error = null;
   loginForm: FormGroup;
   @ViewChild('formDirective') private formDirective: NgForm;
@@ -21,8 +18,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private fb: FormBuilder,
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -38,7 +34,8 @@ export class LoginPage implements OnInit {
   }
 
   private login(enteredValues) {
-    this.authService.login(enteredValues).subscribe(async res => {
+    this.authService.login(enteredValues).subscribe(
+      async (res) => {
         if (res) {
           this.router.navigateByUrl('/tabs').then(() => {
             this.error = null;
@@ -47,14 +44,14 @@ export class LoginPage implements OnInit {
           });
         }
       },
-      async errorResponse => {
+      async (errorResponse) => {
         const alert = await this.alertCtrl.create({
           header: 'Login Failed',
           message: `${errorResponse.error.message}`,
-          buttons: ['OK']
+          buttons: ['OK'],
         });
         await alert.present();
-      });
+      },
+    );
   }
-
 }

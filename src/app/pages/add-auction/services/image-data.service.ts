@@ -10,12 +10,10 @@ export interface ApiImage {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageDataService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getImages() {
     return this.http.get<ApiImage[]>(`${CONSTANTS.API_URL}/image`);

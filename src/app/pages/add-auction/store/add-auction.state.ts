@@ -18,12 +18,10 @@ export interface AuctionStateModel {
 })
 @Injectable()
 export class AddAuctionState {
-
-  constructor(private dataService: AddAuctionDataService) {
-  }
+  constructor(private dataService: AddAuctionDataService) {}
 
   @Action(AddAuction)
   createAuction(ctx: StateContext<AuctionStateModel>, action: AddAuction) {
-    return this.dataService.addAuction(action.auctionData)
+    return this.dataService.addAuction(action.auctionData);
   }
 }

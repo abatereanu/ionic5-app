@@ -1,6 +1,11 @@
 @keyframes errorFieldAnimation {
-  from {height: 0;}
-  to   {height: 20px;}
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 20px;
+  }
 }
 
 .error-field {

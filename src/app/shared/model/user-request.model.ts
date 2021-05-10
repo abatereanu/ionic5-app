@@ -1,4 +1,4 @@
 export class UserRequestModel {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }

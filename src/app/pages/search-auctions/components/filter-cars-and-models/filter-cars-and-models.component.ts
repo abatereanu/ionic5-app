@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import carsAndModels from '../../../../../assets/jsons/cars-and-models.json';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import carsAndModels from '../../../../../assets/jsons/cars-and-models.json';
 import { SearchAuctionsStoreService } from '../../store/search-auctions.store.service';
 
 @UntilDestroy()
@@ -11,17 +11,18 @@ import { SearchAuctionsStoreService } from '../../store/search-auctions.store.se
   styleUrls: ['./filter-cars-and-models.component.scss'],
 })
 export class FilterCarsAndModelsComponent implements OnInit {
-
   carsAndModels = carsAndModels;
+
   availableModels = [];
-  filteredItems: { make: string, model: string }[] = [];
+
+  filteredItems: { make: string; model: string }[] = [];
+
   searchCarsModelsForm = new FormGroup({});
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly storeService: SearchAuctionsStoreService,
-    ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.searchCarsModelsForm = this.formBuilder.group({
@@ -29,30 +30,32 @@ export class FilterCarsAndModelsComponent implements OnInit {
       model: [{ disabled: true, value: undefined }, Validators.required],
     });
 
-    this.filteredItems = [...this.storeService.selectedFilters.makeModels]
+    this.filteredItems = [...this.storeService.selectedFilters.makeModels];
 
-    this.searchCarsModelsForm.get('make').valueChanges
-      .pipe(untilDestroyed(this))
+    this.searchCarsModelsForm
+      .get('make')
+      .valueChanges.pipe(untilDestroyed(this))
       .subscribe(() => {
         this.searchCarsModelsForm.get('model').reset(undefined);
       });
   }
 
   onFormSubmitted(selectedItem) {
-    console.log(selectedItem)
     if (this.searchCarsModelsForm.invalid || this.isAnyFilterPresent(selectedItem)) {
       return;
     }
     this.removeRedundantItems(selectedItem);
 
-    const hasDuplicate = this.filteredItems?.find(i => i.make === selectedItem.make && i.model === selectedItem.model);
+    const hasDuplicate = this.filteredItems?.find(
+      (i) => i.make === selectedItem.make && i.model === selectedItem.model,
+    );
     if (!hasDuplicate && this.filteredItems.length <= 4) {
       this.filteredItems.push(selectedItem);
     }
   }
 
   onMakeSelected(event: CustomEvent) {
-    this.searchCarsModelsForm.get('model').enable()
+    this.searchCarsModelsForm.get('model').enable();
     this.availableModels = carsAndModels[event.detail.value];
   }
 
@@ -62,12 +65,14 @@ export class FilterCarsAndModelsComponent implements OnInit {
 
   removeRedundantItems(selectedItem) {
     if (selectedItem.model === 'Any') {
-      this.filteredItems = this.filteredItems.filter(item => item.make !== selectedItem.make);
+      this.filteredItems = this.filteredItems.filter((item) => item.make !== selectedItem.make);
     }
   }
 
   isAnyFilterPresent(selectedItem) {
-    return this.filteredItems?.find(item => item.make === selectedItem.make && item.model === 'Any');
+    return this.filteredItems?.find(
+      (item) => item.make === selectedItem.make && item.model === 'Any',
+    );
   }
 
   getFilterModel(model: string) {
@@ -77,5 +82,4 @@ export class FilterCarsAndModelsComponent implements OnInit {
   applyFilters() {
     this.storeService.applyMakeModelFilters({ makeModels: this.filteredItems });
   }
-
 }

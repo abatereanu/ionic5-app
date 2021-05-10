@@ -3,19 +3,17 @@ import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 
-import { AuctionListState } from './auction-list.state';
-import { AuctionModel } from '../../add-auction/models/auction.model';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
+import { AuctionListState } from './auction-list.state';
+import type { AuctionModel } from '../../add-auction/models/auction.model';
 import { DeleteAuctionById, GetAuctionList, ResetActionList } from './auction-list.actions';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuctionListStoreService {
-
   @Select(AuctionListState.getAuctions) auctions$: Observable<AuctionModel[]>;
   @SelectSnapshot(AuctionListState.getTotalPages) totalPages: number;
 
-  constructor(private store: Store) {
-  }
+  constructor(private store: Store) {}
 
   getAuctionById(id): Observable<AuctionModel> {
     return this.store.select(AuctionListState.getAuctionById(id));
@@ -35,5 +33,4 @@ export class AuctionListStoreService {
   resetAuctionList() {
     return new ResetActionList();
   }
-
 }

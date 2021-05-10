@@ -1,4 +1,4 @@
 export interface UserModel {
-    createdDate: string;
-    roles: Array<{name: string}>;
+  createdDate: string;
+  roles: { name: string }[];
 }
