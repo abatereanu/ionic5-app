@@ -7,7 +7,8 @@ import { MaterialModule } from '../../core/material.module';
 import { AddAuctionPage } from './pages/add-auction.page';
 import { AddAuctionRoutingModule } from './add-auction-routing.module';
 import { AddAuctionState } from './store/add-auction.state';
-import { ImageModule } from '../../shared/modules/images-module/image.module';
+import { MileageModule } from '../../shared/components/mileage/mileage.module';
+import { ImageModule } from '../../shared/components/images/image.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ImageModule } from '../../shared/modules/images-module/image.module';
     IonicModule,
     ReactiveFormsModule,
     ImageModule,
+    MileageModule,
     MaterialModule,
     AddAuctionRoutingModule,
     NgxsModule.forFeature([AddAuctionState]),

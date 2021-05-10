@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { ImageState } from './store/image.state';
-import { ImageComponent } from './image.component';
+import { ImageComponent } from './component/image.component';
 
 @NgModule({
   imports: [

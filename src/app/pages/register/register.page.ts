@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { AlertController, NavController } from '@ionic/angular';
 
-import { AuthService } from '../../shared/services/auth.service';
-import type { UserRequestModel } from '../../shared/model/user-request.model';
+import { AuthService } from '../../core/components/auth/services/auth.service';
+import type { UserRequestModel } from '../../core/components/auth/models/user-request.model';
 
 @Component({
   selector: 'app-register',

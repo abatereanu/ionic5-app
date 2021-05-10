@@ -8,8 +8,8 @@ import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
-import type { UserRequestModel } from '../model/user-request.model';
-import { CONSTANTS } from '../constants/constants';
+import type { UserRequestModel } from '../models/user-request.model';
+import { CONSTANTS } from '../../../../shared/constants/constants';
 
 const TOKEN_KEY = 'jwt-token';
 const helper = new JwtHelperService();

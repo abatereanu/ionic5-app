@@ -1,0 +1,20 @@
+<div [formGroup]="formGroup">
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label>Mileage</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-segment formControlName="mileageType" (ionChange)="onTransformMileage($event)">
+            <ion-segment-button value="kmh">km/h</ion-segment-button>
+            <ion-segment-button value="mph">mph</ion-segment-button>
+          </ion-segment>
+        </ion-col>
+        <ion-col>
+          <ion-input formControlName="mileage" class="ion-text-right"></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</div>

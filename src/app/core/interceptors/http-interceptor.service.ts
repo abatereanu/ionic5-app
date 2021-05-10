@@ -11,7 +11,7 @@ import { from, Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../components/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',

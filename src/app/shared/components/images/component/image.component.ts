@@ -7,8 +7,8 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
-import { CONSTANTS } from '../../constants/constants';
-import { ApiImage, ImageDataService } from './service/image-data.service';
+import { CONSTANTS } from '../../../constants/constants';
+import { ApiImage, ImageDataService } from '../service/image-data.service';
 
 const { Camera } = Plugins;
 

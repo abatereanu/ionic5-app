@@ -11,6 +11,7 @@ import { SearchAuctionsState } from './store/search-auctions.state';
 import { SearchAuctionsPage } from './page/search-auctions.page';
 import { FilterCarsAndModelsComponent } from './components/filter-cars-and-models/filter-cars-and-models.component';
 import { SearchAuctionsRoutingModule } from './search-auctions-routing.module';
+import { MileageModule } from '../../shared/components/mileage/mileage.module';
 
 @NgModule({
   declarations: [SearchAuctionsPage, FilterCarsAndModelsComponent],
@@ -23,14 +24,8 @@ import { SearchAuctionsRoutingModule } from './search-auctions-routing.module';
     MatInputModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MileageModule,
     NgxsModule.forFeature([SearchAuctionsState]),
   ],
-  /* providers: [{
-    provide: MAT_CHIPS_DEFAULT_OPTIONS,
-    useValue: {
-      separatorKeyCodes: [ENTER, COMMA]
-    }
-  }
-  ] */
 })
 export class SearchAuctionsModule {}
