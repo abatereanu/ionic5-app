@@ -16,7 +16,7 @@ import {
 } from '../../../search-auctions/store/search-auctions.actions';
 import { AuctionModel } from '../../../add-auction/models/auction.model';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
-import { AuthService } from '../../../../shared/services/auth.service';
+import { AuthService } from '../../../../core/components/auth/services/auth.service';
 import { CONSTANTS } from '../../../../shared/constants/constants';
 import { SearchAuctionsStoreService } from '../../../search-auctions/store/search-auctions.store.service';
 

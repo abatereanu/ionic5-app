@@ -17,8 +17,8 @@ import { CoreModule } from './core/core.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
     CoreModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
   ],
   providers: [

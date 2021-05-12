@@ -8,7 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="searchAuctionFormGroup" (ngSubmit)="onSubmitForm(searchAuctionFormGroup.getRawValue())">
+  <form
+    [formGroup]="searchAuctionFormGroup"
+    (ngSubmit)="onSubmitForm(searchAuctionFormGroup.getRawValue())"
+  >
     <ion-card>
       <ion-item [routerLink]="['cars-and-models']">
         <ion-label>Make, Model:</ion-label>
@@ -16,37 +19,25 @@
           <div *ngFor="let item of selectedFilters?.makeModels">
             <span>{{item?.make}} </span>
             <span *ngIf="item?.model !== 'Any'">{{item?.model}}</span>
-            <br/>
+            <br />
           </div>
         </div>
       </ion-item>
       <mat-form-field color="primary">
         <mat-label>From-Till year</mat-label>
         <mat-date-range-input [rangePicker]="fromTillYear" formGroupName="dateRange">
-          <input matStartDate formControlName="fromYear" placeholder="Start date">
-          <input matEndDate formControlName="toYear" placeholder="End date">
+          <input matStartDate formControlName="fromYear" placeholder="Start date" />
+          <input matEndDate formControlName="toYear" placeholder="End date" />
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="fromTillYear"></mat-datepicker-toggle>
         <mat-date-range-picker #fromTillYear startView="year"></mat-date-range-picker>
       </mat-form-field>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-label>Mileage</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-segment formControlName="mileageType" (ionChange)="transformMileageValue($event)">
-                <ion-segment-button value="kmh">km/h</ion-segment-button>
-                <ion-segment-button value="mph">mph</ion-segment-button>
-              </ion-segment>
-            </ion-col>
-            <ion-col>
-              <ion-input formControlName="mileage" class="ion-text-right"></ion-input>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+
+      <app-mileage
+        [formGroup]="searchAuctionFormGroup"
+        (mileageTransform)="transformMileageValue($event)"
+      ></app-mileage>
+
       <ion-item>
         <ion-label position="floating">Vehicle State:</ion-label>
         <ion-select formControlName="vehicleState" interface="popover" value="BMW">
@@ -61,4 +52,3 @@
     <ion-button class="apply-filter-button" expand="block" type="submit">Apply filter</ion-button>
   </form>
 </ion-content>
-

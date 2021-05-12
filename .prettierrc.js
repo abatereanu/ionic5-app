@@ -6,5 +6,4 @@ module.exports = {
   bracketSpacing: true,
   printWidth: 100,
   endOfLine: 'auto',
-  parser: 'typescript',
 };

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../core/components/auth/services/auth.service';
 
 @Component({
   selector: 'app-login',

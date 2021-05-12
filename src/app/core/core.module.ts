@@ -8,12 +8,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { environment } from '../../environments/environment';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
 import { EncodeHttpParamsInterceptorService } from './interceptors/encode-http-params-interceptor.service';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     HttpClientModule,
-    SharedModule,
     IonicStorageModule.forRoot(),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsSelectSnapshotModule.forRoot(),
