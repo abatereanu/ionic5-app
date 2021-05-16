@@ -1,88 +1,71 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/tabs/auction-list"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Details</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="removeAuction(auctionDetails.id)">
-                <ion-icon name="trash" slot="icon-only"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/auction-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editAuction()">
+        <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="removeAuction(auctionDetails?.id)">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-slides *ngIf="auctionDetails?.images.length; else noImage" pager="true" [options]="slideOpts">
-        <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
-            <ion-col class="image">
-                <ion-img [src]="apiUrl + '/image/' + image?.id"></ion-img>
-            </ion-col>
-        </ion-slide>
-    </ion-slides>
-    <ng-template #noImage>
-        <ion-img class="no-img" [src]="'../../../../assets/images/no-img.jpg'"></ion-img>
-    </ng-template>
+  <ion-slides *ngIf="auctionDetails?.images.length; else noImage" pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
+      <ion-col class="image">
+        <ion-img [src]="apiUrl + '/image/' + image?.id"></ion-img>
+      </ion-col>
+    </ion-slide>
+  </ion-slides>
+  <ng-template #noImage>
+    <ion-img class="no-img" [src]="'../../../../assets/images/no-img.jpg'"></ion-img>
+  </ng-template>
 
-    <ion-grid class="auction-details">
-        <h1 class="title">{{auctionDetails?.title}}</h1>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Make:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.make}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Model:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.model}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Mileage:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.mileage}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Mileage type:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.mileageType}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Vehicle state:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.vehicleState}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Year:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.year}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="title" size="4">
-            Description:
-          </ion-col>
-          <ion-col>
-            {{auctionDetails?.description}}
-          </ion-col>
-        </ion-row>
-    </ion-grid>
-    <div *ngIf="auctionDetails?.createdDate" class="date">Post date: {{auctionDetails?.createdDate}}</div>
-    <div *ngIf="auctionDetails?.username" class="date">Author: {{auctionDetails?.username}}</div>
+  <ion-grid class="auction-details">
+    <h1 class="title">{{auctionDetails?.title}}</h1>
+    <ion-row>
+      <ion-col class="title" size="4"> Post Date: </ion-col>
+      <ion-col> {{auctionDetails?.createdDate | date:'dd-MM-YYYY'}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Author: </ion-col>
+      <ion-col> {{auctionDetails?.createdBy}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Make: </ion-col>
+      <ion-col> {{auctionDetails?.make}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Model: </ion-col>
+      <ion-col> {{auctionDetails?.model}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Mileage: </ion-col>
+      <ion-col> {{auctionDetails?.mileage}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Mileage type: </ion-col>
+      <ion-col> {{auctionDetails?.mileageType}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Vehicle state: </ion-col>
+      <ion-col> {{auctionDetails?.vehicleState}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Year: </ion-col>
+      <ion-col> {{auctionDetails?.year}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="title" size="4"> Description: </ion-col>
+      <ion-col> {{auctionDetails?.description}} </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

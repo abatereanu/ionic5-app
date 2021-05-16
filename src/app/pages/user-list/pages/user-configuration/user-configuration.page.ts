@@ -11,10 +11,7 @@ export class UserConfigurationPage implements OnInit {
 
   userConfigFormGroup: FormGroup;
 
-  constructor(
-    private readonly userService: UserListDataService,
-    private readonly formBuilder: FormBuilder,
-  ) {
+  constructor(private readonly userService: UserListDataService, private readonly formBuilder: FormBuilder) {
     this.userConfigFormGroup = this.formBuilder.group({
       rolesControl: [undefined, [Validators.required]],
     });
@@ -22,7 +19,7 @@ export class UserConfigurationPage implements OnInit {
 
   ngOnInit() {
     this.getRoles();
-    this.getRoles()
+    this.getRoles();
   }
 
   private getRoles() {

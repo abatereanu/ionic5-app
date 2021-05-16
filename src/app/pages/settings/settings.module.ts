@@ -7,14 +7,7 @@ import { SettingsPage } from './page/settings.page';
 import { MaterialModule } from '../../core/material.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SettingsPageRoutingModule,
-    ReactiveFormsModule,
-    MaterialModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, SettingsPageRoutingModule, ReactiveFormsModule, MaterialModule],
   declarations: [SettingsPage],
 })
 export class SettingsPageModule {}

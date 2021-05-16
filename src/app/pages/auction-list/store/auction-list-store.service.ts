@@ -6,7 +6,8 @@ import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Dispatch } from '@ngxs-labs/dispatch-decorator';
 import { AuctionListState } from './auction-list.state';
 import type { AuctionModel } from '../../add-auction/models/auction.model';
-import { DeleteAuctionById, GetAuctionList, ResetActionList } from './auction-list.actions';
+import { DeleteAuctionById, EditAuctionById, GetAuctionList, ResetActionList } from './auction-list.actions';
+import { AuctionRequestModel } from '../../add-auction/models/auction-request.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuctionListStoreService {
@@ -32,5 +33,10 @@ export class AuctionListStoreService {
   @Dispatch()
   resetAuctionList() {
     return new ResetActionList();
+  }
+
+  @Dispatch()
+  editAuctionById(id: string, payload: AuctionRequestModel) {
+    return new EditAuctionById(id, payload);
   }
 }

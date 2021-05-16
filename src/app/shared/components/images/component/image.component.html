@@ -1,17 +1,9 @@
 <div id="photos" [formGroup]="formGroup">
-  <input
-    type="file"
-    #fileInput
-    multiple
-    hidden
-    (change)="uploadFile($event)"
-    (click)="fileInput.value = null"
-    accept="image/*"
-  />
+  <input type="file" #fileInput multiple hidden (change)="uploadFile($event)" (click)="fileInput.value = null" accept="image/*" />
 
   <div *ngFor="let image of images; let i = index">
     <ion-card class="photo-card">
-      <ion-img [src]="constants.API_URL + '/image/' + image.id"></ion-img>
+      <ion-img [src]="constants.API_URL + '/image/' + image?.id"></ion-img>
       <ion-fab horizontal="end" vertical="end">
         <ion-fab-button color="danger" (click)="deletePhoto(i, image)">
           <ion-icon name="trash" size="small"></ion-icon>
@@ -21,9 +13,6 @@
   </div>
 
   <ion-card class="photo-card upload-button" (click)="selectImageSource()">
-    <ion-img
-      style="width: 30px; height: 30px"
-      [src]="'../../../../assets/images/add-new-photo.png'"
-    ></ion-img>
+    <ion-img style="width: 30px; height: 30px" [src]="'../../../../assets/images/add-new-photo.png'"></ion-img>
   </ion-card>
 </div>

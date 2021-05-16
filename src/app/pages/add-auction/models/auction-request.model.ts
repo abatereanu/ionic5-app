@@ -1,4 +1,5 @@
 export interface AuctionRequestModel {
+  id?: string;
   title: string;
   make: string;
   model: string;

@@ -17,11 +17,7 @@ import { AuthService } from '../components/auth/services/auth.service';
   providedIn: 'root',
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  constructor(
-    private alertController: AlertController,
-    private storage: Storage,
-    private authService: AuthService,
-  ) {}
+  constructor(private alertController: AlertController, private storage: Storage, private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return from(this.storage.get('jwt-token')).pipe(

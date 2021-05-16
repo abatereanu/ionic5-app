@@ -1,11 +1,6 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import {
-  ActionSheetController,
-  LoadingController,
-  Platform,
-  ToastController,
-} from '@ionic/angular';
+import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
 import { CONSTANTS } from '../../../constants/constants';
 import { ApiImage, ImageDataService } from '../service/image-data.service';
@@ -17,13 +12,13 @@ const { Camera } = Plugins;
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss'],
 })
-export class ImageComponent implements OnChanges {
+export class ImageComponent implements OnInit, OnChanges {
+  @Input() images: ApiImage[] = [];
   @Input() formGroup: FormGroup;
   @Input() formSubmitted: boolean;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
   constants = CONSTANTS;
-  images: ApiImage[] = [];
   imageIds: string[] = [];
 
   constructor(
@@ -33,6 +28,12 @@ export class ImageComponent implements OnChanges {
     private readonly toastController: ToastController,
     private readonly loadingController: LoadingController,
   ) {}
+
+  ngOnInit(): void {
+    if (this.images?.length) {
+      this.images = [...this.images];
+    }
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.formSubmitted?.currentValue) {
@@ -93,21 +94,15 @@ export class ImageComponent implements OnChanges {
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const imageName = 'Give me a name';
 
-    this.imageDataService
-      .uploadImages(blobData, imageName, image.format)
-      .subscribe((newImages: ApiImage[]) => {
-        newImages.forEach(
-          (newImage) => {
-            this.images.push(newImage);
-            this.imageIds = this.images.map((img) => img.id);
-            this.formGroup.get('imageIds').setValue(this.imageIds);
-            loader.dismiss();
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
+    this.imageDataService.uploadImages(blobData, imageName, image.format).subscribe((newImages: ApiImage[]) => {
+      newImages.forEach((newImage) => {
+        this.images = [...this.images];
+        this.images.push(newImage);
+        this.imageIds = this.images.map((img) => img.id);
+        this.formGroup.get('imageIds').setValue(this.imageIds);
+        loader.dismiss();
       });
+    });
   }
 
   // Used for browser direct file upload
@@ -124,6 +119,7 @@ export class ImageComponent implements OnChanges {
     this.imageDataService.uploadImageFiles(files).subscribe(
       (newImages: ApiImage[]) => {
         newImages.forEach((newImage) => {
+          this.images = [...this.images];
           this.images.push(newImage);
           this.imageIds = this.images.map((img) => img.id);
           this.formGroup.get('imageIds').setValue(this.imageIds);
@@ -142,7 +138,6 @@ export class ImageComponent implements OnChanges {
           loader.dismiss();
           toast.present();
         }
-        console.log(error);
       },
     );
   }

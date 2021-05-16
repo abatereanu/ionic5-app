@@ -10,14 +10,7 @@ import { LoginPage } from './login.page';
 import { MaterialModule } from '../../core/material.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    LoginPageRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule, MaterialModule, LoginPageRoutingModule],
   declarations: [LoginPage],
 })
 export class LoginPageModule {}
