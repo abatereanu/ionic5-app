@@ -30,15 +30,11 @@ export class SearchAuctionsPage implements OnInit {
 
   ionViewWillEnter() {
     this.selectedFilters = this.searchAuctionsStoreService.selectedFilters;
-    this.searchAuctionFormGroup
-      .get('makeModels')
-      .setValue(this.searchAuctionsStoreService.selectedFilters.makeModels);
+    this.searchAuctionFormGroup.get('makeModels').setValue(this.searchAuctionsStoreService.selectedFilters.makeModels);
     this.searchAuctionFormGroup
       .get('mileageType')
       .setValue(this.searchAuctionsStoreService.selectedFilters.mileageType || 'kmh');
-    this.searchAuctionFormGroup
-      .get('mileage')
-      .setValue(this.searchAuctionsStoreService.selectedFilters.mileage);
+    this.searchAuctionFormGroup.get('mileage').setValue(this.searchAuctionsStoreService.selectedFilters.mileage);
     this.searchAuctionFormGroup
       .get('vehicleState')
       .setValue(this.searchAuctionsStoreService.selectedFilters.vehicleState);

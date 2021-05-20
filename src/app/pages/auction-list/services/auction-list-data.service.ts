@@ -18,4 +18,8 @@ export class AuctionListDataService {
   removeAuctionById(id) {
     return this.http.delete(`${CONSTANTS.API_URL}/auction/${id}`);
   }
+
+  editAuctionById(id, body) {
+    return this.http.put(`${CONSTANTS.API_URL}/auction/${id}`, body);
+  }
 }

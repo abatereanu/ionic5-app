@@ -22,12 +22,7 @@ export class AuthService {
 
   private userData = new BehaviorSubject(null);
 
-  constructor(
-    private storage: Storage,
-    private http: HttpClient,
-    private plt: Platform,
-    private router: Router,
-  ) {
+  constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) {
     this.loadStoredToken();
   }
 
@@ -36,9 +31,11 @@ export class AuthService {
     this.user = platform$.pipe(
       switchMap(() => from(this.storage.get(TOKEN_KEY))),
       map((token) => {
+        // eslint-disable-next-line no-console
         console.log('Token from storage', token);
         if (token) {
           const decoded = helper.decodeToken(token);
+          // eslint-disable-next-line no-console
           console.log('decoded', decoded);
           this.userData.next(decoded);
           return true;
@@ -53,6 +50,7 @@ export class AuthService {
       take(1),
       switchMap((res: any) => {
         const decoded = helper.decodeToken(res.token);
+        // eslint-disable-next-line no-console
         console.log('login decoded: ', decoded);
         this.userData.next(decoded);
 

@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "eslint": "eslint --max-warnings 0 --ext .js \"src/**/*.ts\"",
+    "eslint:fix": "eslint --max-warnings 0  --fix --ext .js \"src/**/*.ts\"",
     "stylelint": "stylelint \"src/app/**/*.scss\"",
     "stylelint:fix": "stylelint --fix \"src/app/**/*.scss\""
   },

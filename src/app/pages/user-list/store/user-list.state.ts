@@ -27,8 +27,6 @@ export class UserListState {
 
   @Action(GetUserList)
   getUserList(ctx: StateContext<UserListStateModel>) {
-    return this.userDataService
-      .getUsers()
-      .pipe(tap((response) => ctx.setState(patch({ users: response }))));
+    return this.userDataService.getUsers().pipe(tap((response) => ctx.setState(patch({ users: response }))));
   }
 }

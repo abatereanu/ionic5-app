@@ -14,20 +14,16 @@ const routes: Routes = [
     children: [
       {
         path: 'auction-list',
-        loadChildren: () =>
-          import('../auction-list/auction-list.module').then((m) => m.AuctionListModule),
+        loadChildren: () => import('../auction-list/auction-list.module').then((m) => m.AuctionListModule),
       },
       {
         path: 'search-auctions',
         loadChildren: () =>
-          import('../../pages/search-auctions/search-auctions.module').then(
-            (m) => m.SearchAuctionsModule,
-          ),
+          import('../../pages/search-auctions/search-auctions.module').then((m) => m.SearchAuctionsModule),
       },
       {
         path: 'add-auction',
-        loadChildren: () =>
-          import('../../pages/add-auction/add-auction.module').then((m) => m.AddAuctionModule),
+        loadChildren: () => import('../../pages/add-auction/add-auction.module').then((m) => m.AddAuctionModule),
       },
       {
         path: 'user-list',
@@ -35,8 +31,7 @@ const routes: Routes = [
       },
       {
         path: 'settings',
-        loadChildren: () =>
-          import('../../pages/settings/settings.module').then((m) => m.SettingsPageModule),
+        loadChildren: () => import('../../pages/settings/settings.module').then((m) => m.SettingsPageModule),
       },
     ],
   },

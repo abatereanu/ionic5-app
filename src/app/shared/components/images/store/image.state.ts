@@ -24,9 +24,7 @@ export class ImageState {
   uploadImageFiles(ctx: StateContext<any>, action: UploadImageFiles) {
     return this.dataService
       .uploadImageFiles(action.images)
-      .pipe(
-        tap((response) => ctx.setState(patch({ images: ctx.getState().images.concat(response) }))),
-      );
+      .pipe(tap((response) => ctx.setState(patch({ images: ctx.getState().images.concat(response) }))));
   }
 
   @Action(DeleteImage)

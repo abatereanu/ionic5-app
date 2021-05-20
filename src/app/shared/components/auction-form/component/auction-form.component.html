@@ -1,0 +1,78 @@
+<form [formGroup]="auctionFormGroup" (ngSubmit)="onFormSubmitted(auctionFormGroup.getRawValue())" #formDirective="ngForm">
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input formControlName="title"></ion-input>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('title').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('title').getError('required')">This field is required</div>
+    </div>
+    <ion-item>
+      <ion-label position="floating">Make</ion-label>
+      <ion-select formControlName="make" interface="popover" (ionChange)="onMakeSelected($event)">
+        <ng-container *ngFor="let cars of carsAndModels | keyvalue">
+          <ion-select-option [value]="cars.key">{{ cars.key }}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('make').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('make').getError('required')">This field is required</div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Model</ion-label>
+      <ion-select formControlName="model" interface="popover">
+        <ng-container *ngFor="let model of availableModels">
+          <ion-select-option [value]="model">{{ model }}</ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('model').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('model').getError('required')">This field is required</div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Year</ion-label>
+      <ion-datetime formControlName="year" displayFormat="MMM YYYY" min="1950"></ion-datetime>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('year').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('year').getError('required')">This field is required</div>
+    </div>
+
+    <app-mileage [formGroup]="auctionFormGroup"></app-mileage>
+    <div class="error-field" *ngIf="auctionFormGroup.get('mileage').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('mileage').getError('required')">This field is required</div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Vehicle State</ion-label>
+      <ion-select formControlName="vehicleState" interface="popover">
+        <ion-select-option value="new">New</ion-select-option>
+        <ion-select-option value="used">Used</ion-select-option>
+        <ion-select-option value="repair">Needs Repair</ion-select-option>
+        <ion-select-option value="parts">Parts Only</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('vehicleState').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('vehicleState').getError('required')">This field is required</div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea formControlName="description" cols=""></ion-textarea>
+    </ion-item>
+    <div class="error-field" *ngIf="auctionFormGroup.get('description').errors && formDirective.submitted">
+      <div *ngIf="auctionFormGroup.get('description').getError('required')">This field is required</div>
+    </div>
+
+    <app-image [images]="auctionFilledData?.images || []" [formGroup]="auctionFormGroup" [formSubmitted]="isFormSubmitted"></app-image>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button expand="block" type="submit">Submit Auction</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</form>

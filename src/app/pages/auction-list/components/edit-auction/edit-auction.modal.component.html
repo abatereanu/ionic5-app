@@ -1,0 +1,11 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Edit Auction</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <app-auction-form [auctionFilledData]="auctionDetails" [editMode]="true" (formSubmitted)="onFormSubmitted($event)"> </app-auction-form>
+</ion-content>

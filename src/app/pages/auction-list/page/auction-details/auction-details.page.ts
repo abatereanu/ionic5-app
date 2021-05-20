@@ -1,10 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import type { AuctionModel } from '../../../add-auction/models/auction.model';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
 import { CONSTANTS } from '../../../../shared/constants/constants';
+import { EditAuctionModalComponent } from '../../components/edit-auction/edit-auction.modal.component';
 
 @Component({
   selector: 'app-auction-details',
@@ -20,8 +21,9 @@ export class AuctionDetailsPage implements OnInit {
     private route: ActivatedRoute,
     private storeService: AuctionListStoreService,
     private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
     private router: Router,
-    private navController: NavController,
+    private routerOutlet: IonRouterOutlet,
   ) {}
 
   ngOnInit(): void {
@@ -60,5 +62,19 @@ export class AuctionDetailsPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  async editAuction() {
+    const modal = await this.modalCtrl.create({
+      cssClass: 'my-custom-class',
+      component: EditAuctionModalComponent,
+      componentProps: {
+        auctionDetails: this.auctionDetails,
+      },
+      swipeToClose: true,
+      showBackdrop: true,
+      presentingElement: this.routerOutlet.parentOutlet.nativeEl,
+    });
+    await modal.present();
   }
 }

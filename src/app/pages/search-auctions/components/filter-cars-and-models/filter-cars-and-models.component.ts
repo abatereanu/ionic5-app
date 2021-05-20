@@ -19,10 +19,7 @@ export class FilterCarsAndModelsComponent implements OnInit {
 
   searchCarsModelsForm = new FormGroup({});
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly storeService: SearchAuctionsStoreService,
-  ) {}
+  constructor(private readonly formBuilder: FormBuilder, private readonly storeService: SearchAuctionsStoreService) {}
 
   ngOnInit() {
     this.searchCarsModelsForm = this.formBuilder.group({
@@ -70,9 +67,7 @@ export class FilterCarsAndModelsComponent implements OnInit {
   }
 
   isAnyFilterPresent(selectedItem) {
-    return this.filteredItems?.find(
-      (item) => item.make === selectedItem.make && item.model === 'Any',
-    );
+    return this.filteredItems?.find((item) => item.make === selectedItem.make && item.model === 'Any');
   }
 
   getFilterModel(model: string) {

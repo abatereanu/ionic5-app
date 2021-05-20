@@ -10,14 +10,7 @@ import { RegisterPage } from './register.page';
 import { MaterialModule } from '../../core/material.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RegisterPageRoutingModule,
-    ReactiveFormsModule,
-    MaterialModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, RegisterPageRoutingModule, ReactiveFormsModule, MaterialModule],
   declarations: [RegisterPage],
 })
 export class RegisterPageModule {}

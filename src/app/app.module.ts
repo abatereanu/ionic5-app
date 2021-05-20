@@ -14,18 +14,8 @@ import { CoreModule } from './core/core.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    CoreModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-  ],
+  imports: [BrowserModule, IonicModule.forRoot(), CoreModule, AppRoutingModule, BrowserAnimationsModule],
+  providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

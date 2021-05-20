@@ -1,19 +1,11 @@
 import { Actions, ofActionCompleted } from '@ngxs/store';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { delay, filter } from 'rxjs/operators';
-import {
-  ActionSheetController,
-  IonInfiniteScroll,
-  IonRefresher,
-  MenuController,
-} from '@ionic/angular';
+import { ActionSheetController, IonInfiniteScroll, IonRefresher, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-  ApplyAllFilters,
-  ResetAllFilters,
-} from '../../../search-auctions/store/search-auctions.actions';
+import { ApplyAllFilters, ResetAllFilters } from '../../../search-auctions/store/search-auctions.actions';
 import { AuctionModel } from '../../../add-auction/models/auction.model';
 import { AuctionListStoreService } from '../../store/auction-list-store.service';
 import { AuthService } from '../../../../core/components/auth/services/auth.service';
@@ -97,14 +89,12 @@ export class AuctionListPage implements OnInit {
     if (!this.searchAuctionsStoreService.selectedFilters) {
       return false;
     }
-    return Object.values(this.searchAuctionsStoreService.selectedFilters).some(
-      (value: string | any) => {
-        if (Array.isArray(value)) {
-          return value.length;
-        }
-        return !!value;
-      },
-    );
+    return Object.values(this.searchAuctionsStoreService.selectedFilters).some((value: string | any) => {
+      if (Array.isArray(value)) {
+        return value.length;
+      }
+      return !!value;
+    });
   }
 
   async onFilterIconClick() {
