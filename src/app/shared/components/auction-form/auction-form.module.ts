@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuctionFormComponent } from './component/auction-form.component';
 import { ImageModule } from '../images/image.module';
 import { MileageModule } from '../mileage/mileage.module';
+import { MaterialModule } from '../../../core/material.module';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule, ImageModule, MileageModule],
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule, ImageModule, MileageModule, MaterialModule],
   declarations: [AuctionFormComponent],
   providers: [],
   exports: [AuctionFormComponent],

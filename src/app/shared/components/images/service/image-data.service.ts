@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CONSTANTS } from '../../../constants/constants';
+import { ImageModel } from '../../../../pages/add-auction/models/image.model';
 
 export interface ApiImage {
   id: string;
@@ -19,12 +20,12 @@ export class ImageDataService {
     return this.http.get<ApiImage[]>(`${CONSTANTS.API_URL}/image`);
   }
 
-  uploadImages(blobData: any, name, ext) {
+  uploadImages(blobData: any, name: string, ext: string) {
     const formData = new FormData();
     formData.append('file', blobData, `myimage.${ext}`);
     formData.append('name', name);
 
-    return this.http.post(`${CONSTANTS.API_URL}/image`, formData);
+    return this.http.post<ImageModel[]>(`${CONSTANTS.API_URL}/image`, formData);
   }
 
   uploadImageFiles(files: FileList) {
@@ -35,7 +36,7 @@ export class ImageDataService {
       formData.append('name', files.item(i).name);
     }
 
-    return this.http.post<ApiImage[]>(`${CONSTANTS.API_URL}/image`, formData);
+    return this.http.post<ImageModel[]>(`${CONSTANTS.API_URL}/image`, formData);
   }
 
   deleteImage(id) {

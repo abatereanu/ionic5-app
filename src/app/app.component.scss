@@ -18,3 +18,16 @@
   animation-timing-function: ease-in-out;
   animation-direction: alternate;
 }
+
+.cdk-overlay-pane {
+  transform: translateX(0) !important;
+  padding-right: 50px;
+}
+
+.mat-select-arrow-wrapper {
+  padding-right: 16px;
+}
+
+.mat-optgroup-label {
+  color: black;
+}

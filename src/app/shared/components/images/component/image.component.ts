@@ -3,7 +3,8 @@ import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
 import { CONSTANTS } from '../../../constants/constants';
-import { ApiImage, ImageDataService } from '../service/image-data.service';
+import { ImageDataService } from '../service/image-data.service';
+import { ImageModel } from '../../../../pages/add-auction/models/image.model';
 
 const { Camera } = Plugins;
 
@@ -13,7 +14,7 @@ const { Camera } = Plugins;
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements OnInit, OnChanges {
-  @Input() images: ApiImage[] = [];
+  @Input() images: ImageModel[] = [];
   @Input() formGroup: FormGroup;
   @Input() formSubmitted: boolean;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
@@ -94,7 +95,7 @@ export class ImageComponent implements OnInit, OnChanges {
     const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
     const imageName = 'Give me a name';
 
-    this.imageDataService.uploadImages(blobData, imageName, image.format).subscribe((newImages: ApiImage[]) => {
+    this.imageDataService.uploadImages(blobData, imageName, image.format).subscribe((newImages) => {
       newImages.forEach((newImage) => {
         this.images = [...this.images];
         this.images.push(newImage);
@@ -106,7 +107,7 @@ export class ImageComponent implements OnInit, OnChanges {
   }
 
   // Used for browser direct file upload
-  async uploadFile(event: EventTarget) {
+  async uploadFile(event) {
     const loader = await this.loadingController.create({
       message: 'Uploading images...',
     });
@@ -117,7 +118,7 @@ export class ImageComponent implements OnInit, OnChanges {
     const { files } = target;
 
     this.imageDataService.uploadImageFiles(files).subscribe(
-      (newImages: ApiImage[]) => {
+      (newImages) => {
         newImages.forEach((newImage) => {
           this.images = [...this.images];
           this.images.push(newImage);
@@ -142,7 +143,7 @@ export class ImageComponent implements OnInit, OnChanges {
     );
   }
 
-  deletePhoto(i: number, image: ApiImage) {
+  deletePhoto(i: number, image: ImageModel) {
     this.imageDataService.deleteImage(image.id).subscribe(
       async () => {
         this.images.splice(i, 1);

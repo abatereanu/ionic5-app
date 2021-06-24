@@ -1,5 +1,30 @@
+@import 'src/theme/variables';
+
 .my-custom-menu {
   --width: 500px;
+}
+
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media only screen and (min-width: 1025px) {
+  .child {
+    flex: 1 0 $pc;
+  }
+}
+
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+  .child {
+    flex: 1 0 $tablet;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .child {
+    flex: 1 0 $mobile;
+  }
 }
 
 .black-filter {
@@ -17,7 +42,7 @@ ion-img {
 ion-card {
   margin: 10px;
   width: 100%;
-  max-height: 300px;
+  max-height: 100%;
 }
 
 mat-chip-list {

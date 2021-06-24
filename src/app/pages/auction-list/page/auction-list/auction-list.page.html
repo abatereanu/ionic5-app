@@ -6,11 +6,7 @@
     <ion-title>Auction List</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onFilterIconClick()">
-        <ion-icon
-          name="filter"
-          [ngClass]="activeFilters ? 'blue-filter': 'black-filter'"
-          slot="start"
-        ></ion-icon>
+        <ion-icon name="filter" [ngClass]="activeFilters ? 'blue-filter': 'black-filter'" slot="start"></ion-icon>
       </ion-button>
       <ion-button (click)="onLogout()">
         <ion-icon name="log-out" slot="end"></ion-icon>
@@ -23,38 +19,29 @@
   <ion-router-outlet id="main"></ion-router-outlet>
 
   <ion-refresher slot="fixed" (ionRefresh)="loadData($event)">
-    <ion-refresher-content pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles">
-    </ion-refresher-content>
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" refreshingSpinner="circles"> </ion-refresher-content>
   </ion-refresher>
-
-  <!--<mat-chip-list aria-label="Fish selection">
-    <mat-chip color="primary" selected>Reset filters</mat-chip>
-  </mat-chip-list>-->
 
   <h1 *ngIf="!auctionList?.length" class="no-items">No items available</h1>
 
-  <ion-item *ngFor="let auction of auctionList" [routerLink]="['details', auction?.id]">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{auction?.title}}</ion-card-title>
-        <ion-card-subtitle>
-          {{auction?.year | date:'yyyy'}} {{auction?.make}} {{auction?.model}}
-        </ion-card-subtitle>
-      </ion-card-header>
+  <div class="parent">
+    <ion-item class="child" *ngFor="let auction of auctionList" [routerLink]="['details', auction?.id]">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{auction?.title}}</ion-card-title>
+          <ion-card-subtitle> {{auction?.year | date:'yyyy'}} {{auction?.make}} {{auction?.model}} </ion-card-subtitle>
+        </ion-card-header>
 
-      <ion-card-content>
-        <div *ngFor="let image of auction?.images; let i = index">
-          <ion-img *ngIf="i === 0" [src]="apiUrl + '/image/' + image?.id"></ion-img>
-        </div>
-        <div class="description">
-          Date of publication: {{auction?.createdDate | date : 'dd/MM/YYYY'}}
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </ion-item>
-
-  <ion-infinite-scroll threshold="340px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
+        <ion-card-content>
+          <div *ngFor="let image of auction?.images; let i = index">
+            <ion-img *ngIf="i === 0" [src]="apiUrl + '/image/' + image?.id"></ion-img>
+          </div>
+          <div class="description">Date of publication: {{auction?.createdDate | date : 'dd/MM/YYYY'}}</div>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </div>
+  <ion-infinite-scroll threshold="500px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data..."> </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

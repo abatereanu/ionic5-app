@@ -12,12 +12,14 @@ import { AuctionListState } from './store/auction-list.state';
 import { AuctionDetailsPage } from './page/auction-details/auction-details.page';
 import { AuctionFormModule } from '../../shared/components/auction-form/auction-form.module';
 import { EditAuctionModalComponent } from './components/edit-auction/edit-auction.modal.component';
+import { MaterialModule } from '../../core/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    MaterialModule,
     AuctionFeedPageRoutingModule,
     MatChipsModule,
     MatIconModule,

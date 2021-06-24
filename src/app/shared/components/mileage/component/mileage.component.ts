@@ -10,7 +10,7 @@ export class MileageComponent {
   @Input() formGroup: FormGroup;
   @Output() mileageTransform = new EventEmitter();
 
-  onTransformMileage(event: CustomEvent) {
-    this.mileageTransform.emit(event);
+  onTransformMileage(mileageValue) {
+    this.mileageTransform.emit(mileageValue);
   }
 }

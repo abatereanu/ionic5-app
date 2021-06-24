@@ -12,7 +12,6 @@ import { AuctionRequestModel } from '../models/auction-request.model';
 @Component({
   selector: 'app-add-auction',
   templateUrl: './add-auction.page.html',
-  styleUrls: ['./add-auction.page.scss'],
 })
 export class AddAuctionPage {
   resetForm: Subject<boolean> = new Subject();
