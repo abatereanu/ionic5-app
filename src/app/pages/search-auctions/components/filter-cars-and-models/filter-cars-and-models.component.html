@@ -15,20 +15,19 @@
 <ion-content>
   <ng-container *ngFor="let filter of filteredItems; let i = index">
     <ion-chip>
-      <ion-label>{{filter.make}} {{getFilterModel(filter.model)}}</ion-label>
+      <ion-label>{{ filter.make }} {{ getFilterModel(filter.model) }}</ion-label>
       <ion-icon name="close-circle" (click)="onDeleteFilter(i)"></ion-icon>
     </ion-chip>
   </ng-container>
-  <div class="filter-limit-error" [ngClass]="{'error-message' : filteredItems?.length > 3}">Too many filtered items</div>
+  <div class="filter-limit-error" [ngClass]="{ 'error-message': filteredItems?.length > 3 }">Too many filtered items</div>
 
-  <form [formGroup]="searchCarsModelsForm" (ngSubmit)="onFormSubmitted(searchCarsModelsForm.getRawValue())"
-        #formDirective="ngForm">
+  <form [formGroup]="searchCarsModelsForm" (ngSubmit)="onFormSubmitted(searchCarsModelsForm.getRawValue())" #formDirective="ngForm">
     <ion-list>
       <ion-item>
         <ion-label position="floating">Make</ion-label>
         <ion-select formControlName="make" interface="popover" (ionChange)="onMakeSelected($event)">
           <ng-container *ngFor="let cars of carsAndModels | keyvalue">
-            <ion-select-option [value]="cars.key">{{cars.key}}</ion-select-option>
+            <ion-select-option [value]="cars.key">{{ cars.key }}</ion-select-option>
           </ng-container>
         </ion-select>
       </ion-item>
@@ -41,7 +40,7 @@
         <ion-select formControlName="model" interface="popover">
           <ion-select-option [value]="">Any</ion-select-option>
           <ng-container *ngFor="let model of availableModels">
-            <ion-select-option [value]="model">{{model}}</ion-select-option>
+            <ion-select-option [value]="model">{{ model }}</ion-select-option>
           </ng-container>
         </ion-select>
       </ion-item>
@@ -53,5 +52,4 @@
       <ion-icon slot="icon-only" name="add"></ion-icon>
     </ion-button>
   </form>
-
 </ion-content>

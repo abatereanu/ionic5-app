@@ -122,6 +122,10 @@ export class AuctionFormComponent implements OnInit {
     this.bidEndDate = dayjs().add(1, 'week').add(3, 'day').format();
   }
 
+  onImagesChanged(newImages) {
+    this.auctionForm.get('imageIds').setValue(newImages.map((i) => i.id));
+  }
+
   private initForm() {
     this.auctionForm = this.formBuilder.group({
       auctionType: [this.auctionFilledData?.auctionType, Validators.required],
