@@ -1,26 +1,57 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  EventEmitter,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { ActionSheetController, LoadingController, Platform, ToastController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  Gesture,
+  GestureController,
+  IonCard,
+  LoadingController,
+  Platform,
+  ToastController,
+} from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CONSTANTS } from '../../../constants/constants';
 import { ImageDataService } from '../service/image-data.service';
 import { ImageModel } from '../../../../pages/add-auction/models/image.model';
+import { approxEq } from '../../../utils/approximatelly-equals';
 
 const { Camera } = Plugins;
 
+@UntilDestroy()
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.scss'],
 })
-export class ImageComponent implements OnInit, OnChanges {
+export class ImageComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() images: ImageModel[] = [];
   @Input() formGroup: FormGroup;
   @Input() formSubmitted: boolean;
+  @Output() imagesChanged = new EventEmitter();
+
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+  @ViewChild('dropZone', { read: ElementRef }) dropZone: ElementRef;
+  @ViewChildren(IonCard, { read: ElementRef }) imageElements: QueryList<ElementRef>;
 
   constants = CONSTANTS;
+  isIconChanged: boolean;
   imageIds: string[] = [];
+  gestureArray: Gesture[] = [];
 
   constructor(
     private readonly imageDataService: ImageDataService,
@@ -28,12 +59,26 @@ export class ImageComponent implements OnInit, OnChanges {
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly toastController: ToastController,
     private readonly loadingController: LoadingController,
+    private readonly gestureCtrl: GestureController,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     if (this.images?.length) {
       this.images = [...this.images];
     }
+  }
+
+  public ngAfterViewInit(): void {
+    this.imageElements.changes.pipe(untilDestroyed(this)).subscribe(() => {
+      if (this.isIconChanged) {
+        // Delete old gestures, they will be updated from scratch
+        this.gestureArray.forEach((gesture) => gesture.destroy());
+        this.updateGestures();
+        this.isIconChanged = false;
+      }
+    });
+    this.updateGestures();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -125,6 +170,7 @@ export class ImageComponent implements OnInit, OnChanges {
           this.imageIds = this.images.map((img) => img.id);
           this.formGroup.get('imageIds').setValue(this.imageIds);
           loader.dismiss();
+          this.isIconChanged = true;
         });
       },
       async (error) => {
@@ -160,9 +206,58 @@ export class ImageComponent implements OnInit, OnChanges {
     );
   }
 
+  updateGestures() {
+    let targetElement;
+    const imageElementsArray = this.imageElements.toArray();
+    // Remove last element since from QueryList it is Add new Photo and it shouldn't be draggable
+    imageElementsArray.pop();
+    imageElementsArray.forEach((element, index) => {
+      const moveGesture = this.gestureCtrl.create({
+        el: element.nativeElement,
+        threshold: 0,
+        gestureName: 'move',
+        onStart: () => {
+          targetElement = element.nativeElement;
+          targetElement.style.opacity = 0.5;
+        },
+        onMove: (ev) => {
+          targetElement.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY}px)`;
+        },
+        onEnd: () => {
+          const targetElementRect = element.nativeElement.getBoundingClientRect();
+          if (!this.isTargetInDropZone(targetElementRect)) {
+            targetElement.style.transform = `translate(0, 0)`;
+            targetElement.style.transition = `.4s ease-out`;
+            targetElement.style.opacity = 1;
+          } else {
+            // Get ElementRef's Rect
+            const imageArrayBoundRects = imageElementsArray.map((item) => item.nativeElement.getBoundingClientRect());
+            const candidateSwapIndex = this.determineTargetCandidateSwap(imageArrayBoundRects, index);
+            if (candidateSwapIndex !== -1) {
+              [this.images[index], this.images[candidateSwapIndex]] = [
+                this.images[candidateSwapIndex],
+                this.images[index],
+              ];
+            }
+            targetElement.style.transition = `.4s ease-out`;
+            targetElement.style.transform = `translate(0, 0)`;
+            targetElement.style.opacity = 1;
+            this.isIconChanged = true;
+            this.imagesChanged.emit(this.images);
+            this.cdr.detectChanges();
+          }
+        },
+      });
+
+      // Each gesture must be enabled in order to be draggable
+      moveGesture.enable(true);
+      this.gestureArray.push(moveGesture);
+    });
+  }
+
   // Helper function
   // https://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
-  b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+  private b64toBlob(b64Data, contentType = '', sliceSize = 512) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
 
@@ -179,5 +274,28 @@ export class ImageComponent implements OnInit, OnChanges {
     }
 
     return new Blob(byteArrays, { type: contentType });
+  }
+
+  private isTargetInDropZone(targetRect) {
+    const dropZoneRect: ClientRect = this.dropZone.nativeElement.getBoundingClientRect();
+    return (
+      targetRect.left > dropZoneRect.left &&
+      targetRect.right < dropZoneRect.right &&
+      targetRect.top > dropZoneRect.top &&
+      targetRect.bottom < dropZoneRect.bottom
+    );
+  }
+
+  private determineTargetCandidateSwap(imagesArrayRect, targetIndex): number {
+    const targetRect = imagesArrayRect[targetIndex];
+    return imagesArrayRect.findIndex((currentElRect, currentIndex) => {
+      return (
+        approxEq(targetRect.left, currentElRect.left, 50) &&
+        approxEq(targetRect.bottom, currentElRect.bottom, 50) &&
+        approxEq(targetRect.right, currentElRect.right, 50) &&
+        approxEq(targetRect.top, currentElRect.top, 50) &&
+        currentIndex !== targetIndex
+      );
+    });
   }
 }

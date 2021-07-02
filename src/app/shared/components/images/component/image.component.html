@@ -1,4 +1,4 @@
-<div id="photos" [formGroup]="formGroup">
+<div #dropZone id="photos" [formGroup]="formGroup">
   <input type="file" #fileInput multiple hidden (change)="uploadFile($event)" (click)="fileInput.value = null" accept="image/*" />
 
   <div *ngFor="let image of images; let i = index">
