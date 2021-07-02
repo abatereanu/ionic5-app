@@ -12,11 +12,8 @@ import { SearchAuctionsStoreService } from '../../store/search-auctions.store.se
 })
 export class FilterCarsAndModelsComponent implements OnInit {
   carsAndModels = carsAndModels;
-
   availableModels = [];
-
   filteredItems: { make: string; model: string }[] = [];
-
   searchCarsModelsForm = new FormGroup({});
 
   constructor(private readonly formBuilder: FormBuilder, private readonly storeService: SearchAuctionsStoreService) {}
