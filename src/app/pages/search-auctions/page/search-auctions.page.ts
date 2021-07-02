@@ -79,15 +79,15 @@ export class SearchAuctionsPage implements OnInit {
     this.resetSearchFilters();
   }
 
-  transformMileageValue(event: CustomEvent) {
+  transformMileageValue(event) {
     const mileageValueFormControl = this.searchAuctionFormGroup.get('mileage');
-    const milageValue = mileageValueFormControl.value;
-    if (milageValue === null) {
+    const mileageValue = mileageValueFormControl.value;
+    if (mileageValue === null) {
       return;
     }
-    const finalMilageValue =
-      event.detail.value === 'mph' ? (milageValue * 0.6).toFixed() : (milageValue / 0.6).toFixed();
-    mileageValueFormControl.setValue(finalMilageValue);
+    const finalMileageValue =
+      event.detail.value === 'mph' ? (mileageValue * 0.6).toFixed() : (mileageValue / 0.6).toFixed();
+    mileageValueFormControl.setValue(finalMileageValue);
   }
 
   resetSearchFilters() {

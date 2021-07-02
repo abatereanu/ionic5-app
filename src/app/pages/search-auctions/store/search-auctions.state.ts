@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { ApplyAllFilters, ApplyMakeModelFilters, ResetAllFilters } from './search-auctions.actions';
 
 export interface SearchAuctionsStateModel {
-  makeModels: [];
+  makeModels: { make: string; model: string }[];
   fromYear: string;
   toYear: string;
   mileage: number;
@@ -50,7 +50,7 @@ export class SearchAuctionsState {
   resetAllFilters(ctx: StateContext<SearchAuctionsStateModel>) {
     return ctx.setState(
       patch({
-        makeModels: [],
+        makeModels: [] as any,
         fromYear: null,
         toYear: null,
         mileage: null,

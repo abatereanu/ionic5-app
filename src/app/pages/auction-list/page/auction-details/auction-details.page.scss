@@ -16,7 +16,16 @@
   flex-direction: row-reverse;
 }
 
-.title {
-  font-size: 14px;
-  font-weight: 500;
+ion-col {
+  background-color: #f7f7f7;
+  border: solid 1px #ddd;
+  padding: 10px;
+}
+
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

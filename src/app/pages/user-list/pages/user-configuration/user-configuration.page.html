@@ -14,30 +14,27 @@
 
 <ion-content>
   <ion-row>
-    <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
-             offset-xl="4">
+    <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4" offset-xl="4">
       <ion-card>
         <ion-card-header>
           <ion-card-title class="ion-text-center">Set an role to the user</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-          <form [formGroup]="userConfigFormGroup" (ngSubmit)="submitForm(userConfigFormGroup.value)">
+          <form [formGroup]="userConfigFormGroup">
             <mat-form-field appearance="fill" style="width: 100%">
               <mat-label>Select Role</mat-label>
               <mat-select formControlName="rolesControl" name="role" multiple panelClass="select-color">
-                <mat-option *ngFor="let role of roles" [value]="role" class="role-option">
-                  {{role.toLowerCase()}}
-                </mat-option>
+                <mat-option *ngFor="let role of roles" [value]="role" class="role-option"> {{role.toLowerCase()}} </mat-option>
               </mat-select>
               <mat-error *ngIf="userConfigFormGroup.get('rolesControl').hasError('required')">Please choose one or more roles</mat-error>
             </mat-form-field>
-            <ion-button [disabled]="userConfigFormGroup.untouched || userConfigFormGroup.invalid" type="submit" expand="block">Register</ion-button>
+            <ion-button [disabled]="userConfigFormGroup.untouched || userConfigFormGroup.invalid" type="submit" expand="block"
+              >Register</ion-button
+            >
           </form>
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
 </ion-content>
-
-

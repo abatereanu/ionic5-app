@@ -51,7 +51,7 @@ export class FilterCarsAndModelsComponent implements OnInit {
     }
   }
 
-  onMakeSelected(event: CustomEvent) {
+  onMakeSelected(event) {
     this.searchCarsModelsForm.get('model').enable();
     this.availableModels = carsAndModels[event.detail.value];
   }

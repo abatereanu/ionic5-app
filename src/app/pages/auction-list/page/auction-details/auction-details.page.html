@@ -18,10 +18,24 @@
 </ion-header>
 
 <ion-content>
+  <div class="parent">
+    <h1>{{auctionDetails?.title}}</h1>
+    <div>
+      <ion-chip
+        #toolTip="matTooltip"
+        (click)="showToolTip(auctionDetails?.auctionType)"
+        [matTooltip]="toolTipInfo"
+        matTooltipPosition="right"
+      >
+        {{auctionDetails?.auctionType | titlecase}}
+      </ion-chip>
+      <span>{{auctionDetails?.price}}</span>
+    </div>
+  </div>
   <ion-slides *ngIf="auctionDetails?.images.length; else noImage" pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let image of auctionDetails?.images; let i = index;">
       <ion-col class="image">
-        <ion-img [src]="apiUrl + '/image/' + image?.id"></ion-img>
+        <img [src]="apiUrl + '/image/' + image?.id" />
       </ion-col>
     </ion-slide>
   </ion-slides>
@@ -30,7 +44,6 @@
   </ng-template>
 
   <ion-grid class="auction-details">
-    <h1 class="title">{{auctionDetails?.title}}</h1>
     <ion-row>
       <ion-col class="title" size="4"> Post Date: </ion-col>
       <ion-col> {{auctionDetails?.createdDate | date:'dd-MM-YYYY'}} </ion-col>
@@ -38,6 +51,10 @@
     <ion-row>
       <ion-col class="title" size="4"> Author: </ion-col>
       <ion-col> {{auctionDetails?.createdBy}} </ion-col>
+    </ion-row>
+    <ion-row *ngIf="auctionDetails?.endOfBidDate">
+      <ion-col class="title" size="4"> End of Bid Date </ion-col>
+      <ion-col> {{auctionDetails?.endOfBidDate | date : 'dd-MMM-YYYY HH:mm:ss'}} </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="title" size="4"> Make: </ion-col>
@@ -49,11 +66,7 @@
     </ion-row>
     <ion-row>
       <ion-col class="title" size="4"> Mileage: </ion-col>
-      <ion-col> {{auctionDetails?.mileage}} </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="title" size="4"> Mileage type: </ion-col>
-      <ion-col> {{auctionDetails?.mileageType}} </ion-col>
+      <ion-col> {{auctionDetails?.mileage}} {{auctionDetails?.mileageType}} </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="title" size="4"> Vehicle state: </ion-col>
@@ -61,7 +74,7 @@
     </ion-row>
     <ion-row>
       <ion-col class="title" size="4"> Year: </ion-col>
-      <ion-col> {{auctionDetails?.year}} </ion-col>
+      <ion-col> {{auctionDetails?.year | date : 'MMM-YYYY'}} </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="title" size="4"> Description: </ion-col>
