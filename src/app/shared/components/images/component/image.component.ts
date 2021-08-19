@@ -3,17 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
-  EventEmitter,
   QueryList,
   SimpleChanges,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import {
   ActionSheetController,
   Gesture,
@@ -25,12 +24,11 @@ import {
 } from '@ionic/angular';
 import { FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { CONSTANTS } from '../../../constants/constants';
 import { ImageDataService } from '../service/image-data.service';
 import { ImageModel } from '../../../../pages/add-auction/models/image.model';
 import { approxEq } from '../../../utils/approximatelly-equals';
-
-const { Camera } = Plugins;
 
 @UntilDestroy()
 @Component({
